@@ -4,7 +4,7 @@
 ```
     - app
         ----- models/
-        ---------- nerd.js <!-- the nerd model to handle CRUD -->
+        ---------- user.js <!-- the nerd model to handle -->
     ----- routes.js
     - config
         ----- db.js 
@@ -20,8 +20,6 @@
     ----- libs <!-- created by bower install -->
     ----- views 
     ---------- home.html
-    ---------- nerd.html
-    ---------- geek.html
     ----- index.html
     - .bowerrc <!-- tells bower where to put files (public/libs) -->
     - bower.json <!-- tells bower which files we need -->
