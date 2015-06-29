@@ -1,6 +1,6 @@
 # Centro Di controllo Sensori 
 
-#albero dell'applicazione
+#Application Tree
 ```
     - app
         ----- models/
@@ -27,11 +27,14 @@
     - server.js <!-- set up our node application -->
 ```
 
-#Installazione
-Comandi per installazione dipendenze applicazione:
+#Installation
+Comands to install application dependencies:
 
+```
 npm install
+```
 
+```
 bower install
-
+```
 
