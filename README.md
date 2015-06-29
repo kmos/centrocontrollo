@@ -1,7 +1,7 @@
 # Centro Di controllo Sensori 
 
 #albero dell'applicazione
-'''
+```
     - app
         ----- models/
         ---------- nerd.js <!-- the nerd model to handle CRUD -->
@@ -27,7 +27,7 @@
     - bower.json <!-- tells bower which files we need -->
     - package.json <!-- tells npm which packages we need -->
     - server.js <!-- set up our node application -->
-'''
+```
 
 #Installazione
 Comandi per installazione dipendenze applicazione:
