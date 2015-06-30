@@ -1,4 +1,5 @@
 var Node = require('./models/node');
+var passport = require('passport');
 
 module.exports = function(app) {
   app.get('/api/nodes', function(req, res) {
