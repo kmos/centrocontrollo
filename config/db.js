@@ -1,5 +1,3 @@
-// config/db.js
-    module.exports = {
-        url : 'mongodb://localhost/test'
-    }
-
+module.exports = {
+  url: 'mongodb://localhost/test'
+}
