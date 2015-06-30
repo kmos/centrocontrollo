@@ -1,3 +1,3 @@
 // public/js/app.js
-angular.module('sampleApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'ControlPanelCtrl', 'ControlPanelService']);
+angular.module('ccApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'ControlPanelCtrl', 'ControlPanelService']);
 
