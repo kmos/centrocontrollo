@@ -43,4 +43,5 @@ bower install
 - comunicazione sched
 - gestione CRUD nodi
 - gestione crud sensore
+- Fase iniziale di setup: (Timestamp,altro che non mi viene in mente ma mi fa ansia)
 
