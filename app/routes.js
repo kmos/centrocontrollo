@@ -1,4 +1,5 @@
 var Node = require('./models/node');
+var Sensor = require('./models/sensor');
 var passport = require('passport');
 
 module.exports = function(app) {
@@ -11,6 +12,17 @@ module.exports = function(app) {
       res.json(nodes);
     });
   });
+
+  app.get('/api/monitor', function(req, res) {
+    Sensor.find(function(err, measurements) {
+      if (err) {
+        res.send(err);
+      }
+
+      res.json(measurements);
+    });
+  });
+
   // =====================================
   // LOGIN ===============================
   // =====================================
