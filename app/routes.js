@@ -14,8 +14,8 @@ module.exports = function(app) {
   // LOGIN ===============================
   // =====================================
   // show the login form
-  app.get('/login', function(req, res) {
-
+  app.get('/login', passport.authenticate('local'), function(req, res) {
+    res.send(req.user);
     // render the page and pass in any flash data if it exists
     // res.render('login.ejs', { message: req.flash('loginMessage') }); 
   });
