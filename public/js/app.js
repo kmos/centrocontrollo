@@ -1,4 +1,3 @@
-// public/js/app.js
 angular.module('ccApp', [
   'ngRoute',
   'ngTable',
@@ -8,5 +7,5 @@ angular.module('ccApp', [
   'ControlPanelService',
   'NodesCtrl',
   'NodesService',
+  'MonitorCtrl',
 ]);
-

@@ -1,0 +1,19 @@
+<div class="jumbotron text-center">
+  <h2>Monitor</h2>
+
+  <hr>
+
+  <table ng-table class="table">
+    <tr ng-repeat="measurement in measurements">
+      <td data-title="'ID'">
+        {{ measurement.ID }}
+      </td>
+      <td data-title="'Type'">
+        {{ measurement.type }}
+      </td>
+      <td data-title="'Value'">
+        {{ measurement.value }}
+      </td>
+    </tr>
+  </table>
+</div>

@@ -11,6 +11,10 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
   .when('/Nodes', {
     templateUrl: 'views/nodes.html',
     controller: 'NodesController'
+  })
+  .when('/Monitor', {
+    templateUrl: 'views/monitor.html',
+    controller: 'MonitorController'
   });
 
   $locationProvider.html5Mode(true);
