@@ -37,4 +37,10 @@ npm install
 ```
 bower install
 ```
+#TODO
+- interfaccia login
+- Monitor/memodatabase
+- comunicazione sched
+- gestione CRUD nodi
+- gestione crud sensore
 
