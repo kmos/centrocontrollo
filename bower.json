@@ -7,8 +7,7 @@
         "font-awesome": "latest",
         "animate.css": "latest",
         "angular": "latest",
-        "angular-route": "latest",
-        "ng-table": "latest"
+        "angular-route": "latest"
     }
 }
 
