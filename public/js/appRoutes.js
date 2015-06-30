@@ -1,17 +1,17 @@
-// public/js/appRoutes.js
-    angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+  $routeProvider
+  .when('/', {
+    templateUrl: 'views/home.html',
+    controller: 'MainController'
+  })
+  .when('/ControlPanel', {
+    templateUrl: 'views/ControlPanel.html',
+    controller: 'ControlPanelController'
+  })
+  .when('/Nodes', {
+    templateUrl: 'views/nodes.html',
+    controller: 'NodesController'
+  });
 
-    $routeProvider
-        .when('/', {
-            templateUrl: 'views/home.html',
-            controller: 'MainController'
-        })
-        .when('/ControlPanel', {
-            templateUrl: 'views/ControlPanel.html',
-            controller: 'ControlPanelController'
-        });
-
-    $locationProvider.html5Mode(true);
-
+  $locationProvider.html5Mode(true);
 }]);
-

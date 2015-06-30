@@ -1,4 +1,4 @@
-angular.module('ControlPanelService', []).factory('Node', ['$http', function($http) {
+angular.module('NodesService', []).factory('Nodes', ['$http', function($http) {
   return {
     get: function() {
       return $http.get('/api/nodes');
