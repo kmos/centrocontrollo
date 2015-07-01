@@ -1,0 +1,14 @@
+{
+  // System module configs
+  "System": {
+    "dbConfig": {
+      "host": "localhost",
+      "port": 5984,
+      "dbName": "customers"
+    },
+    "serial": {
+      "port": "/dev/ACM0",
+      "baudrate": 115200
+    }
+  }
+}
