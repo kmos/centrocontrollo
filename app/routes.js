@@ -48,8 +48,8 @@ module.exports = function(app,passport) {
     failureFlash: true
   }));
 
-  app.post('/api/logout', function(req, res) {
-    req.logOut();
+  app.get('/api/logout', function(req, res) {
+    req.logout();
     res.redirect('/api/login');
   });
 
@@ -57,7 +57,7 @@ module.exports = function(app,passport) {
   // app.post('/signup', do all our passport stuff here);
 
 
-  app.get('*', function(req, res) {
+  app.get('*',auth, function(req, res) {
     res.sendfile('./public/views/index.html');
   });
 
