@@ -50,4 +50,20 @@ describe("Nodes: models", function() {
       });
     });
   });
+
+  describe("#delete()", function() {
+    it("should delete a Node", function(done) {
+      Node.remove(node, function(err, nodes) {
+        assert.ifError(err);
+
+        Node.find(function(err, nodes) {
+          assert.ifError(err);
+
+          assert.equal(nodes.length, 0);
+
+          done();
+        });
+      });
+    });
+  });
 });
