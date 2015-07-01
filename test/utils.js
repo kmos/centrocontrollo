@@ -1,7 +1,7 @@
 var db = require('../config/db');
 var mongoose = require('mongoose');
 
-beforeEach(function(done) {
+before(function(done) {
   function clearDB() {
     for (var i in mongoose.connection.collections) {
       mongoose.connection.collections[i].remove(function() {});
@@ -23,7 +23,7 @@ beforeEach(function(done) {
   }
 });
 
-afterEach(function(done) {
+after(function(done) {
   mongoose.disconnect();
   done();
 });
