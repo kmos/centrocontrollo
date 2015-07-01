@@ -14,7 +14,7 @@ var config         = require('config');
 // configuration ===========================================
     
 // config files
-require('./config/passport')(passport); // passport config
+require('./config/passport')(passport,config); // passport config
 var dbConfig = config.get('System.dbConfig');
 
 // set our port
