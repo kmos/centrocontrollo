@@ -15,7 +15,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
   .when('/Monitor', {
     templateUrl: 'views/monitor.html',
     controller: 'MonitorController'
-  });
+  })
   .when('/logout', {
     templateUrl: 'views/logout.html',
     controller: 'LogoutController'
