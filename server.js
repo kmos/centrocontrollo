@@ -10,16 +10,18 @@ var passport       = require('passport');
 var session        = require('express-session');
 var cookieParser   = require('cookie-parser');
 var flash          = require('connect-flash');
+var config         = require('config');
 // configuration ===========================================
     
 // config files
-var db = require('./config/db');
 require('./config/passport')(passport); // passport config
+var dbConfig = config.get('System.dbConfig');
+
 // set our port
 var port = process.env.PORT || 8080; 
 
 // connect to our mongoDB database 
-mongoose.connect(db.url);
+mongoose.connect(dbConfig.address);
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json 
