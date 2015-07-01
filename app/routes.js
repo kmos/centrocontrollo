@@ -3,6 +3,15 @@ var Sensor = require('./models/sensor');
 
 
 module.exports = function(app,passport) {
+  
+  // Define a middleware function to be used for every secured routes
+  var auth = function(req, res, next){
+    if (!req.isAuthenticated()) 
+      res.redirect('/api/login');
+    else
+      next();
+  };
+
   app.get('/api/nodes', function(req, res) {
     Node.find(function(err, nodes) {
       if (err) {
@@ -27,10 +36,9 @@ module.exports = function(app,passport) {
   // LOGIN ===============================
   // =====================================
   // show the login form
-  app.get('/api/login', passport.authenticate('local'), function(req, res) {
-    res.send(req.user);
+  app.get('/api/login', function(req, res) {
     // render the page and pass in any flash data if it exists
-    res.render('../public/view/login.ejs', { message: req.flash('loginMessage') }); 
+    res.render('../public/views/login.ejs', { message: req.flash('loginMessage') });
   });
 
   // process the login form
@@ -45,11 +53,13 @@ module.exports = function(app,passport) {
     res.redirect('/api/login');
   });
 
-    // process the signup form
-    // app.post('/signup', do all our passport stuff here);
+  // process the signup form
+  // app.post('/signup', do all our passport stuff here);
 
 
   app.get('*', function(req, res) {
     res.sendfile('./public/views/index.html');
   });
+
+  //==================================================================
 };
