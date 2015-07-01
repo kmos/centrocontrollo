@@ -4,6 +4,10 @@
     "dbConfig": {
       "address": "mongodb://localhost/test"
     },
+    "credentials": {
+      "username": "admin",
+      "password": "porco"
+    },
     "serial": {
       "port": "/dev/ACM0",
       "baudrate": 115200
