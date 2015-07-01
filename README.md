@@ -1,4 +1,4 @@
-# Centro di Controllo Sensori
+# Centro di Controllo Sensori [![Build Status](https://travis-ci.org/marco-c/centrocontrollo.svg)](https://travis-ci.org/marco-c/centrocontrollo)
 
 #Installation
 Comands to install application dependencies:
