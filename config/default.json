@@ -4,7 +4,7 @@
     "dbConfig": {
       "address": "mongodb://localhost/test"
     },
-    "credentials": {
+    "credential": {
       "username": "admin",
       "password": "porco"
     },
