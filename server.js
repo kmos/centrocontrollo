@@ -14,7 +14,7 @@ var flash          = require('connect-flash');
     
 // config files
 var db = require('./config/db');
-
+require('./config/passport')(passport); // passport config
 // set our port
 var port = process.env.PORT || 8080; 
 
@@ -48,6 +48,10 @@ app.set('view engine', 'ejs');
 app.use(session({ secret: 'embeddedmifaibuttareilsangue' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+
+// use connect-flash for flash messages stored in session
+app.use(flash());
+
 
 // routes ==================================================
 require('./app/routes')(app,passport); // configure our routes
