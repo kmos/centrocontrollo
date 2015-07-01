@@ -2,9 +2,7 @@
   // System module configs
   "System": {
     "dbConfig": {
-      "host": "localhost",
-      "port": 5984,
-      "dbName": "customers"
+      "address": "mongodb://localhost/test"
     },
     "serial": {
       "port": "/dev/ACM0",
