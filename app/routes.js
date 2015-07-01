@@ -1,8 +1,8 @@
 var Node = require('./models/node');
 var Sensor = require('./models/sensor');
-var passport = require('passport');
 
-module.exports = function(app) {
+
+module.exports = function(app,passport) {
   app.get('/api/nodes', function(req, res) {
     Node.find(function(err, nodes) {
       if (err) {
@@ -27,22 +27,22 @@ module.exports = function(app) {
   // LOGIN ===============================
   // =====================================
   // show the login form
-  app.get('/login', passport.authenticate('local'), function(req, res) {
+  app.get('/api/login', passport.authenticate('local'), function(req, res) {
     res.send(req.user);
     // render the page and pass in any flash data if it exists
-    // res.render('login.ejs', { message: req.flash('loginMessage') }); 
+    res.render('../public/view/login.ejs', { message: req.flash('loginMessage') }); 
   });
 
   // process the login form
-  // app.post('/login', do all our passport stuff here);
+  app.post('/api/login', passport.authenticate('local',{
+    successRedirect: '/',
+    failureRedirect: '/api/login',
+    failureFlash: true
+  }));
 
-  // =====================================
-  // SIGNUP ==============================
-  // =====================================
-  // show the signup form
-  app.get('/signup', function(req, res) {
-    // render the page and pass in any flash data if it exists
-    //res.render('signup.ejs', { message: req.flash('signupMessage') });
+  app.post('/api/logout', function(req, res) {
+    req.logOut();
+    res.redirect('/api/login');
   });
 
     // process the signup form
