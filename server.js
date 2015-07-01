@@ -6,7 +6,10 @@ var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose       = require('mongoose');
-
+var passport       = require('passport');
+var session        = require('express-session');
+var cookieParser   = require('cookie-parser');
+var flash          = require('connect-flash');
 // configuration ===========================================
     
 // config files
@@ -35,8 +38,19 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public'));
 app.use("/libs", express.static(__dirname + '/libs'));
 
+//read cookies (needed for auth)
+app.use(cookieParser()); 
+
+// set up ejs for templating
+app.set('view engine', 'ejs');
+
+// required for passport
+app.use(session({ secret: 'embeddedmifaibuttareilsangue' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
 // routes ==================================================
-require('./app/routes')(app); // configure our routes
+require('./app/routes')(app,passport); // configure our routes
 
 // start app ===============================================
 // startup our app at http://localhost:8080
