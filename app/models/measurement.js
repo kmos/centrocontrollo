@@ -1,13 +1,16 @@
 var mongoose = require('mongoose');
 
 var measurementSchema = new mongoose.Schema({
-  _nodeId: {mongoose.Schema.Types.ObjectId,
+  _nodeId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'node'
   },
-  _sensorId: {mongoose.Schema.Types.ObjectId,
+  _sensorId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'sensor'},
+    ref: 'sensor'
+  },
   timestamp: Date,
   value: String,
 });
