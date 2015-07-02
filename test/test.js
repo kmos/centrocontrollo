@@ -31,6 +31,8 @@ describe("Node.models", function() {
     }, ],
   };
 
+  var dbNode;
+
   describe("#create()", function() {
     it("should create a new Node", function(done) {
       Node.create(node, function(err, createdNode) {
@@ -45,12 +47,12 @@ describe("Node.models", function() {
         assert.strictEqual(createdNode.sensors[0].measurements.length, 1, "1 measurement");
         assert.strictEqual(createdNode.sensors[0].measurements[0].value, "7", "measurement value is 7");
 
+        dbNode = createdNode;
+
         done();
       });
     });
   });
-
-  var dbNode;
 
   describe("#find()", function() {
     it("should find a Node", function(done) {
@@ -66,8 +68,6 @@ describe("Node.models", function() {
         assert.strictEqual(nodes[0].sensors[0].klass, "Temperature", "sensor class is 'Temperature'");
         assert.strictEqual(nodes[0].sensors[0].measurements.length, 1, "1 measurement");
         assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7", "measurement value is 7");
-
-        dbNode = nodes[0];
 
         done();
       });
@@ -142,8 +142,6 @@ describe("Node.models", function() {
         assert.strictEqual(nodes[0].sensors[0].measurements.length, 1, "1 measurement");
         assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7", "measurement value is 7");
 
-        dbNode = nodes[0];
-
         done();
       });
     });
@@ -151,7 +149,7 @@ describe("Node.models", function() {
 
   describe("#delete()", function() {
     it("should delete a Node", function(done) {
-      Node.remove(dbNode, function(err, nodes) {
+      Node.remove({ _id: "0" }, function(err, nodes) {
         assert.ifError(err);
 
         Node.find(function(err, nodes) {
