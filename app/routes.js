@@ -22,6 +22,19 @@ module.exports = function(app,passport) {
     });
   });
 
+  app.post('/api/nodes', function(req, res) {
+    var node = new Node();
+    node.id = req.body.id;
+
+    node.save(function(err) {
+      if (err) {
+        res.send(err);
+      }
+
+      res.json({ message: 'Node created!' });
+    });
+  });
+
   app.get('/api/monitor', function(req, res) {
     Sensor.find(function(err, measurements) {
       if (err) {
