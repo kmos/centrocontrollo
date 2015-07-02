@@ -1,13 +1,16 @@
 var mongoose = require('mongoose');
 
+var Measurement = require('./measurement');
+
 var sensorSchema = new mongoose.Schema({
-  id: String,
-  sclass: String,
+  _id: String,
+  klass: String,
   priority: Number,
   alarm: Boolean,
-  LowThreshold: Number,
-  HighThreshold: Number,
-  period_ms: Number
+  lowThreshold: Number,
+  highThreshold: Number,
+  periodMs: Number,
+  measurements: [ Measurement.schema ]
 });
 
 module.exports = mongoose.model('Sensor', sensorSchema);

@@ -3,10 +3,10 @@ var mongoose = require('mongoose');
 var Sensor = require('./sensor');
 
 var nodeSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   address: String,
   connected: Boolean,
-  sensors: [Sensor],
+  sensors: [ Sensor.schema ],
 });
 
 module.exports = mongoose.model('Node', nodeSchema);
