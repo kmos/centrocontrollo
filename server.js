@@ -64,5 +64,29 @@ app.listen(port);
 
 console.log('Listening on port ' + port);
 
+var SerialPort = require('./fakeserialport');
+var serialPort = new SerialPort(config.get('System.serial.port'), {
+  baudrate: config.get('System.serial.baudrate')
+}, false);
+
+serialPort.open(function(err) {
+  if (err) {
+    console.log('Error opening serial: ' + err);
+    return;
+  }
+
+  console.log('Serial port opened');
+
+  serialPort.on('data', function(data) {
+    console.log('Data received: ' + data);
+  });
+
+  serialPort.write("ls\n", function(err, results) {
+    if (err) {
+      console.log("Error writing to serial: " + err);
+    }
+  });
+});
+
 // expose app           
 exports = module.exports = app; 
