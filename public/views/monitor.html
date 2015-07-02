@@ -6,10 +6,13 @@
   <table ng-table class="table">
     <tr ng-repeat="measurement in measurements">
       <td data-title="'ID'">
-        {{ measurement.ID }}
+        {{ measurement.nodeID }}
       </td>
-      <td data-title="'Type'">
-        {{ measurement.type }}
+      <td data-title="'SensorID'">
+        {{ measurement.sensorID }}
+      </td>
+      <td data-title="'Timestamp'">
+        {{ measurement.timestamp }}
       </td>
       <td data-title="'Value'">
         {{ measurement.value }}

@@ -1,14 +1,22 @@
 angular.module('MonitorCtrl', []).controller('MonitorController', function($scope) {
-  $scope.measurements = [
-    { ID: 0, type: '°C', value: '777', },
-    { ID: 1, type: 'Pa', value: '1', },
-  ];
+  $scope.measurements = [];
 
   var measurementEvents = new EventSource("/api/rt_measurements");
 
   measurementEvents.addEventListener("measurement", function(event) {
     var measurement = JSON.parse(event.data);
-    console.log(event.data);
+    if ($scope.measurements.length >= 10) {
+      $scope.measurements.pop();
+    }
+
+    $scope.measurements.unshift({
+      nodeID: measurement.nodeId,
+      sensorID: measurement.sensorId,
+      timestamp: measurement.timestamp,
+      value: measurement.value,
+    });
+
+    $scope.$apply();
   });
 });
 
