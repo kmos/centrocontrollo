@@ -46,7 +46,7 @@ module.exports = function(app,passport) {
     });
   });
   
-  app.delete(function(req, res){
+  app.delete('/api/nodes', auth, function(req, res){
     Node.remove({_id: req.params.node_id}, function(err, node){
       if(err) res.send(err);
       res.json({ message: 'Successfully deleted'});
