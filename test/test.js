@@ -36,14 +36,14 @@ describe("Node.models", function() {
       Node.create(node, function(err, createdNode) {
         assert.ifError(err);
 
-        assert.strictEqual(createdNode._id, "0");
-        assert.strictEqual(createdNode.address, "127.0.0.1");
-        assert.strictEqual(createdNode.connected, false);
-        assert.strictEqual(createdNode.sensors.length, 1);
-        assert.strictEqual(createdNode.sensors[0]._id, "0");
-        assert.strictEqual(createdNode.sensors[0].klass, "Temperature");
-        assert.strictEqual(createdNode.sensors[0].measurements.length, 1);
-        assert.strictEqual(createdNode.sensors[0].measurements[0].value, "7");
+        assert.strictEqual(createdNode._id, "0", "node ID is 0");
+        assert.strictEqual(createdNode.address, "127.0.0.1", "node address is 127.0.0.1");
+        assert.strictEqual(createdNode.connected, false, "node connected is false");
+        assert.strictEqual(createdNode.sensors.length, 1, "1 sensor");
+        assert.strictEqual(createdNode.sensors[0]._id, "0", "sensor ID is 0");
+        assert.strictEqual(createdNode.sensors[0].klass, "Temperature", "sensor class is 'Temperature'");
+        assert.strictEqual(createdNode.sensors[0].measurements.length, 1, "1 measurement");
+        assert.strictEqual(createdNode.sensors[0].measurements[0].value, "7", "measurement value is 7");
 
         done();
       });
@@ -58,14 +58,14 @@ describe("Node.models", function() {
         assert.ifError(err);
 
         assert.strictEqual(nodes.length, 1);
-        assert.strictEqual(nodes[0]._id, "0");
-        assert.strictEqual(nodes[0].address, "127.0.0.1");
-        assert.strictEqual(nodes[0].connected, false);
-        assert.strictEqual(nodes[0].sensors.length, 1);
-        assert.strictEqual(nodes[0].sensors[0]._id, "0");
-        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature");
-        assert.strictEqual(nodes[0].sensors[0].measurements.length, 1);
-        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7");
+        assert.strictEqual(nodes[0]._id, "0", "node ID is 0");
+        assert.strictEqual(nodes[0].address, "127.0.0.1", "node address is 127.0.0.1");
+        assert.strictEqual(nodes[0].connected, false, "node connected is false");
+        assert.strictEqual(nodes[0].sensors.length, 1, "1 sensor");
+        assert.strictEqual(nodes[0].sensors[0]._id, "0", "sensor ID is 0");
+        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature", "sensor class is 'Temperature'");
+        assert.strictEqual(nodes[0].sensors[0].measurements.length, 1, "1 measurement");
+        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7", "measurement value is 7");
 
         dbNode = nodes[0];
 
@@ -98,15 +98,15 @@ describe("Node.models", function() {
         assert.ifError(err);
 
         assert.strictEqual(nodes.length, 1);
-        assert.strictEqual(nodes[0]._id, "0");
-        assert.strictEqual(nodes[0].address, "127.0.0.1");
-        assert.strictEqual(nodes[0].connected, false);
-        assert.strictEqual(nodes[0].sensors.length, 1);
-        assert.strictEqual(nodes[0].sensors[0]._id, "0");
-        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature");
-        assert.strictEqual(nodes[0].sensors[0].measurements.length, 2);
-        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7");
-        assert.strictEqual(nodes[0].sensors[0].measurements[1].value, "77");
+        assert.strictEqual(nodes[0]._id, "0", "node ID is 0");
+        assert.strictEqual(nodes[0].address, "127.0.0.1", "node address is 127.0.0.1");
+        assert.strictEqual(nodes[0].connected, false, "node connected is false");
+        assert.strictEqual(nodes[0].sensors.length, 1, "1 sensor");
+        assert.strictEqual(nodes[0].sensors[0]._id, "0", "sensor ID is 0");
+        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature", "sensor class is 'Temperature'");
+        assert.strictEqual(nodes[0].sensors[0].measurements.length, 2, "2 measurements");
+        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7", "first measurement value is 7");
+        assert.strictEqual(nodes[0].sensors[0].measurements[1].value, "77", "second measurement value is 77");
 
         dbNode = nodes[0];
 
@@ -127,20 +127,20 @@ describe("Node.models", function() {
     });
   });
 
-  describe("#find()", function() {
+  describe("#findAfterRemoveMeasurement()", function() {
     it("should find a Node with 1 measurement", function(done) {
       Node.find(function(err, nodes) {
         assert.ifError(err);
 
         assert.strictEqual(nodes.length, 1);
-        assert.strictEqual(nodes[0]._id, "0");
-        assert.strictEqual(nodes[0].address, "127.0.0.1");
-        assert.strictEqual(nodes[0].connected, false);
-        assert.strictEqual(nodes[0].sensors.length, 1);
-        assert.strictEqual(nodes[0].sensors[0]._id, "0");
-        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature");
-        assert.strictEqual(nodes[0].sensors[0].measurements.length, 1);
-        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7");
+        assert.strictEqual(nodes[0]._id, "0", "node ID is 0");
+        assert.strictEqual(nodes[0].address, "127.0.0.1", "node address is 127.0.0.1");
+        assert.strictEqual(nodes[0].connected, false, "node connected is false");
+        assert.strictEqual(nodes[0].sensors.length, 1, "1 sensor");
+        assert.strictEqual(nodes[0].sensors[0]._id, "0", "sensor ID is 0");
+        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature", "sensor class is 'Temperature'");
+        assert.strictEqual(nodes[0].sensors[0].measurements.length, 1, "1 measurement");
+        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7", "measurement value is 7");
 
         dbNode = nodes[0];
 
@@ -157,7 +157,7 @@ describe("Node.models", function() {
         Node.find(function(err, nodes) {
           assert.ifError(err);
 
-          assert.equal(nodes.length, 0);
+          assert.equal(nodes.length, 0, "no nodes");
 
           done();
         });
