@@ -34,6 +34,24 @@ module.exports = function(app,passport) {
       res.json({ message: 'Node created!' });
     });
   });
+  
+  app.put('/api/nodes', auth, function(req, res){
+    Node.findById(req.params.node_id, function(err, node){
+      if(err) res.send(err);
+      //in linea di massima non vanno modificati i parametri del nodo ma i sensori
+      node.save(function(err){
+      if(err) res.send(err);
+      res.json({message: 'node update'});
+      });
+    });
+  });
+  
+  app.delete(function(req, res){
+    Node.remove({_id: req.params.node_id}, function(err, node){
+      if(err) res.send(err);
+      res.json({ message: 'Successfully deleted'});
+    });
+  });
 
   app.get('/api/monitor', function(req, res) {
     Sensor.find(function(err, measurements) {
