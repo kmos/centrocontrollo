@@ -1,9 +1,8 @@
 var Node = require('./models/node');
 var Sensor = require('./models/sensor');
-
+var Measurement = require('./models/measurement');
 
 module.exports = function(app,passport) {
-  
   // Define a middleware function to be used for every secured routes
   var auth = function(req, res, next){
     if (!req.isAuthenticated()) 
@@ -50,6 +49,22 @@ module.exports = function(app,passport) {
     Node.remove({_id: req.params.node_id}, function(err, node){
       if(err) res.send(err);
       res.json({ message: 'Successfully deleted'});
+    });
+  });
+
+  app.get('/api/measurement', auth, function(req, res){
+    Measurement.find(function(err, measurements){
+      if(err) res.send(err);
+      res.json(measurements);
+    });
+  });
+  
+  app.get('/api/measurement:id_node', auth, function(req, res){
+    Measurement.findOne({_nodeId: req.params.id_node}, function(err, measurement){
+      if(err) res.send(err);
+      if(!measurement) res.json('not found');
+
+      res.json(measurement);
     });
   });
 
