@@ -36,7 +36,7 @@ describe("Node.models", function() {
       Node.create(node, function(err, createdNode) {
         assert.ifError(err);
 
-        assert.strictEqual(createdNode.id, "0");
+        assert.strictEqual(createdNode._id, "0");
         assert.strictEqual(createdNode.address, "127.0.0.1");
         assert.strictEqual(createdNode.connected, false);
         assert.strictEqual(createdNode.sensors.length, 1);
@@ -58,7 +58,7 @@ describe("Node.models", function() {
         assert.ifError(err);
 
         assert.strictEqual(nodes.length, 1);
-        assert.strictEqual(nodes[0].id, "0");
+        assert.strictEqual(nodes[0]._id, "0");
         assert.strictEqual(nodes[0].address, "127.0.0.1");
         assert.strictEqual(nodes[0].connected, false);
         assert.strictEqual(nodes[0].sensors.length, 1);
@@ -98,7 +98,7 @@ describe("Node.models", function() {
         assert.ifError(err);
 
         assert.strictEqual(nodes.length, 1);
-        assert.strictEqual(nodes[0].id, "0");
+        assert.strictEqual(nodes[0]._id, "0");
         assert.strictEqual(nodes[0].address, "127.0.0.1");
         assert.strictEqual(nodes[0].connected, false);
         assert.strictEqual(nodes[0].sensors.length, 1);
@@ -133,7 +133,7 @@ describe("Node.models", function() {
         assert.ifError(err);
 
         assert.strictEqual(nodes.length, 1);
-        assert.strictEqual(nodes[0].id, "0");
+        assert.strictEqual(nodes[0]._id, "0");
         assert.strictEqual(nodes[0].address, "127.0.0.1");
         assert.strictEqual(nodes[0].connected, false);
         assert.strictEqual(nodes[0].sensors.length, 1);
