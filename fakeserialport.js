@@ -12,14 +12,15 @@ FakeSerialPort.prototype.open = function(callback) {
     this.eventHandlers["open"] && this.eventHandlers["open"]();
 
     setInterval((function() {
-      var measurement = {
+      var message = {
+        type: "measurement",
         nodeId: Math.floor(Math.random() * 100),
         sensorId: Math.floor(Math.random() * 100),
         timestamp: Date.now(),
         value: Math.floor(Math.random() * 100),
       };
 
-      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(measurement)));
+      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(message)));
     }).bind(this), 5000);
   }).bind(this), 0);
 };
