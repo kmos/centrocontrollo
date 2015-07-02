@@ -11,7 +11,7 @@ describe("Example", function() {
 
 var Node = require('../app/models/node');
 
-describe("Nodes: models", function() {
+describe("Node", function() {
   var node = {
     id: "0",
     address: "127.0.0.1",
@@ -64,6 +64,20 @@ describe("Nodes: models", function() {
           done();
         });
       });
+    });
+  });
+});
+
+var http = require('http');
+
+describe("Server requests", function() {
+  it("should be able to connect to the server", function(done) {
+    http.get("http://localhost:8080/api/login", function(res) {
+      assert.equal(res.statusCode, 200);
+      done();
+    }).on('error', function(e) {
+      assert.ifError(e);
+      done();
     });
   });
 });
