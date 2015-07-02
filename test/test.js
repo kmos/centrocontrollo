@@ -11,12 +11,24 @@ describe("Example", function() {
 
 var Node = require('../app/models/node');
 
-describe("Node", function() {
+describe("Node.models", function() {
   var node = {
-    id: "0",
+    _id: "0",
     address: "127.0.0.1",
     connected: false,
-    sensors: [],
+    sensors: [ {
+      _id: "0",
+      klass: "Temperature",
+      priority: 0,
+      alarm: true,
+      lowThreshold: 10,
+      highThreshold: 100,
+      periodMs: 1000,
+      measurements: [ {
+        timestamp: new Date,
+        value: "7",
+      }, ],
+    }, ],
   };
 
   describe("#create()", function() {
@@ -27,8 +39,88 @@ describe("Node", function() {
         assert.strictEqual(createdNode.id, "0");
         assert.strictEqual(createdNode.address, "127.0.0.1");
         assert.strictEqual(createdNode.connected, false);
-        assert(createdNode.sensors instanceof Array);
-        assert.equal(createdNode.sensors.length, 0);
+        assert.strictEqual(createdNode.sensors.length, 1);
+        assert.strictEqual(createdNode.sensors[0]._id, "0");
+        assert.strictEqual(createdNode.sensors[0].klass, "Temperature");
+        assert.strictEqual(createdNode.sensors[0].measurements.length, 1);
+        assert.strictEqual(createdNode.sensors[0].measurements[0].value, "7");
+
+        done();
+      });
+    });
+  });
+
+  var dbNode;
+
+  describe("#find()", function() {
+    it("should find a Node", function(done) {
+      Node.find(function(err, nodes) {
+        assert.ifError(err);
+
+        assert.strictEqual(nodes.length, 1);
+        assert.strictEqual(nodes[0].id, "0");
+        assert.strictEqual(nodes[0].address, "127.0.0.1");
+        assert.strictEqual(nodes[0].connected, false);
+        assert.strictEqual(nodes[0].sensors.length, 1);
+        assert.strictEqual(nodes[0].sensors[0]._id, "0");
+        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature");
+        assert.strictEqual(nodes[0].sensors[0].measurements.length, 1);
+        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7");
+
+        dbNode = nodes[0];
+
+        done();
+      });
+    });
+  });
+
+  // TODO: Test adding a sensor
+  // TODO: Test removing a sensor
+
+  describe("#addMeasurement()", function() {
+    it("should add a measurement to a node", function(done) {
+      dbNode.sensors[0].measurements.push({
+        timestamp: new Date,
+        value: "77",
+      });
+
+      dbNode.save(function(err) {
+        assert.ifError(err);
+
+        done();
+      });
+    });
+  });
+
+  describe("#findAfterAddMeasurement()", function() {
+    it("should find a Node with two measurements", function(done) {
+      Node.find(function(err, nodes) {
+        assert.ifError(err);
+
+        assert.strictEqual(nodes.length, 1);
+        assert.strictEqual(nodes[0].id, "0");
+        assert.strictEqual(nodes[0].address, "127.0.0.1");
+        assert.strictEqual(nodes[0].connected, false);
+        assert.strictEqual(nodes[0].sensors.length, 1);
+        assert.strictEqual(nodes[0].sensors[0]._id, "0");
+        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature");
+        assert.strictEqual(nodes[0].sensors[0].measurements.length, 2);
+        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7");
+        assert.strictEqual(nodes[0].sensors[0].measurements[1].value, "77");
+
+        dbNode = nodes[0];
+
+        done();
+      });
+    });
+  });
+
+  describe("#removeMeasurement()", function() {
+    it("should remove a measurement from node", function(done) {
+      dbNode.sensors[0].measurements[1].remove();
+
+      dbNode.save(function(err) {
+        assert.ifError(err);
 
         done();
       });
@@ -36,15 +128,21 @@ describe("Node", function() {
   });
 
   describe("#find()", function() {
-    it("should find a Node", function(done) {
+    it("should find a Node with 1 measurement", function(done) {
       Node.find(function(err, nodes) {
         assert.ifError(err);
 
-        assert.equal(nodes.length, 1);
-        assert.equal(nodes[0].id, node.id);
-        assert.equal(nodes[0].address, node.address);
-        assert.equal(nodes[0].connected, node.connected);
-        assert.equal(nodes[0].sensors.length, node.sensors.length);
+        assert.strictEqual(nodes.length, 1);
+        assert.strictEqual(nodes[0].id, "0");
+        assert.strictEqual(nodes[0].address, "127.0.0.1");
+        assert.strictEqual(nodes[0].connected, false);
+        assert.strictEqual(nodes[0].sensors.length, 1);
+        assert.strictEqual(nodes[0].sensors[0]._id, "0");
+        assert.strictEqual(nodes[0].sensors[0].klass, "Temperature");
+        assert.strictEqual(nodes[0].sensors[0].measurements.length, 1);
+        assert.strictEqual(nodes[0].sensors[0].measurements[0].value, "7");
+
+        dbNode = nodes[0];
 
         done();
       });
@@ -53,7 +151,7 @@ describe("Node", function() {
 
   describe("#delete()", function() {
     it("should delete a Node", function(done) {
-      Node.remove(node, function(err, nodes) {
+      Node.remove(dbNode, function(err, nodes) {
         assert.ifError(err);
 
         Node.find(function(err, nodes) {
