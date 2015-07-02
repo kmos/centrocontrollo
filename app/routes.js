@@ -4,10 +4,6 @@ var Measurement = require('./models/measurement');
 
 var board = require("../board");
 
-board.registerListener(function(message) {
-  console.log(message);
-}, "measurement");
-
 function initSSE(res) {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
