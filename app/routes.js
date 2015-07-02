@@ -1,6 +1,6 @@
 var Node = require('./models/node');
 var Sensor = require('./models/sensor');
-
+var Measurement = require('./models/measurement');
 
 module.exports = function(app,passport) {
   
@@ -12,13 +12,37 @@ module.exports = function(app,passport) {
       next();
   };
 
-  app.get('/api/nodes', function(req, res) {
+  app.get('/api/nodes',auth, function(req, res) {
     Node.find(function(err, nodes) {
       if (err) {
         res.send(err);
       }
 
       res.json(nodes);
+    });
+  });
+  
+  app.post('/api/nodes', auth, function(req, res){
+    var node = new Node();
+    node.id = req.body.id;
+    node.address = req.body.address;
+    node.connected = req.body.connected;
+    //qua andrebbe gestito l'array...da vedere
+    node.sensors = req.body.sensors;
+  });
+  
+  app.put('/api/nodes', auth, function(req, res){
+    Node.findById(req.params.node_id, function(err, node){
+      if(err) res.send(err);
+      //in linea teorica andrebbe fatto solo l'update dei sensori come configurazione
+      //andrebbe fatta la delete del nodo
+    })
+  });
+  
+  app.delete('/api/nodes', auth, function(req, res){
+    Node.remove({ _id: req.params.node_id}, function(err, node){
+      if(err) res.send(err);
+      res.json({ message: 'Successfully deleted'});
     });
   });
 
@@ -52,10 +76,6 @@ module.exports = function(app,passport) {
     req.logout();
     res.redirect('/api/login');
   });
-
-  // process the signup form
-  // app.post('/signup', do all our passport stuff here);
-
 
   app.get('*',auth, function(req, res) {
     res.sendfile('./public/views/index.html');
