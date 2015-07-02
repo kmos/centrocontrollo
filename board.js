@@ -82,6 +82,10 @@ Board.prototype.registerListener = function(callback, what, nodeId, sensorId) {
   }
 
   this.eventListeners[what][nodeId][sensorId].push(callback);
-}
+};
+
+Board.prototype.removeListener = function(callback, what, nodeId, sensorId) {
+  // TODO: Remove listener
+};
 
 module.exports = new Board();

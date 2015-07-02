@@ -2,6 +2,26 @@ var Node = require('./models/node');
 var Sensor = require('./models/sensor');
 var Measurement = require('./models/measurement');
 
+var board = require("../board");
+
+board.registerListener(function(message) {
+  console.log(message);
+}, "measurement");
+
+function initSSE(res) {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+  });
+  res.write("\n");
+
+  return function(name, data) {
+    res.write("event: " + name + "\n");
+    res.write("data: " + JSON.stringify(data) + "\n\n");
+  }
+}
+
 module.exports = function(app,passport) {
   // Define a middleware function to be used for every secured routes
   var auth = function(req, res, next){
@@ -49,6 +69,20 @@ module.exports = function(app,passport) {
     Node.remove({_id: req.params.node_id}, function(err, node){
       if(err) res.send(err);
       res.json({ message: 'Successfully deleted'});
+    });
+  });
+
+  app.get("/api/rt_measurements", function(req, res) {
+    var sendEvent = initSSE(res);
+
+    var receiveMeasurement = function(message) {
+      sendEvent("measurement", message);
+    };
+
+    board.registerListener(receiveMeasurement, "measurement");
+
+    req.once("end", function() {
+      board.removeListener(receiveMeasurement, "measurement");
     });
   });
 

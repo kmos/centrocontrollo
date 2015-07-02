@@ -62,11 +62,5 @@ require('./app/routes')(app,passport); // configure our routes
 // startup our app at http://localhost:8080
 app.listen(port);
 
-var board = require("./board");
-
-board.registerListener(function(message) {
-  console.log(message);
-}, "measurement");
-
 // expose app           
 exports = module.exports = app; 
