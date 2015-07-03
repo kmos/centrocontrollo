@@ -1,8 +1,6 @@
 angular.module('SensorCtrl', []).controller('SensorController', function($scope, $route, $routeParams) {
   $scope.measurements = [];
 
-  alert("/api/rt_measurements/" + $routeParams.nodeID + "/" + $routeParams.sensorID);
-
   var measurementEvents = new EventSource("/api/rt_measurements/" + $routeParams.nodeID + "/" + $routeParams.sensorID);
 
   measurementEvents.addEventListener("measurement", function(event) {
