@@ -27,6 +27,16 @@ module.exports = function(app,passport) {
       next();
   };
 
+  app.get('/api/nodes/:nodeID', function(req, res) {
+    Node.find({ _id: req.params.nodeID }, function(err, nodes) {
+      if (err) {
+        res.send(err);
+      }
+
+      res.json(nodes[0]);
+    });
+  });
+
   app.get('/api/nodes', function(req, res) {
     Node.find(function(err, nodes) {
       if (err) {
