@@ -1,5 +1,4 @@
 {
-  // System module configs
   "System": {
     "dbConfig": {
       "address": "mongodb://localhost/test"
