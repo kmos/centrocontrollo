@@ -1,0 +1,37 @@
+<div class="jumbotron text-center">
+  <h2>Sensor</h2>
+
+  <hr>
+
+  <table ng-table class="table">
+    <tr ng-repeat="measurement in measurements">
+      <td data-title="'ID'">
+        {{ measurement.nodeID }}
+      </td>
+      <td data-title="'SensorID'">
+        {{ measurement.sensorID }}
+      </td>
+      <td data-title="'Timestamp'">
+        {{ measurement.timestamp }}
+      </td>
+      <td data-title="'Value'">
+        {{ measurement.value }}
+      </td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <button>Launch measurement</button>
+
+</div>
+
+<div class="jumbotron">
+  <div class="text-center">
+    <h3>Configurazione</h3>
+  </div>
+
+  <hr>
+
+  Aggiungere qui il form per la configurazione
+</div>

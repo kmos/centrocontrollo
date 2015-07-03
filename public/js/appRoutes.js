@@ -16,6 +16,10 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
     templateUrl: 'views/monitor.html',
     controller: 'MonitorController'
   })
+  .when('/Sensor/:node_id/:sensor_id', {
+    templateUrl: 'views/sensor.html',
+    controller: 'SensorController'
+  })
   .when('/logout', {
     templateUrl: 'views/logout.html',
     controller: 'LogoutController'
