@@ -14,8 +14,8 @@ FakeSerialPort.prototype.open = function(callback) {
     setInterval((function() {
       var message = {
         type: "measurement",
-        nodeId: Math.floor(Math.random() * 100),
-        sensorId: Math.floor(Math.random() * 100),
+        nodeId: Math.floor(Math.random() * 5),
+        sensorId: Math.floor(Math.random() * 5),
         timestamp: Date.now(),
         value: Math.floor(Math.random() * 100),
       };
