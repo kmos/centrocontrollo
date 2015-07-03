@@ -1,11 +1,11 @@
-angular.module('NodesCtrl', []).controller('NodesController', ['$scope', 'Nodes', function($scope, Nodes) {
+angular.module('NodesCtrl', []).controller('NodesController', ['$scope', '$location', 'Nodes', function($scope, $location, Nodes) {
   Nodes.get().success(function(data){
     $scope.nodes = data;
     $scope.loading = false;
   });
 
   $scope.setSelected = function(nodeID) {
-    alert(nodeID);
+    $location.path("/Node/" + nodeID);
   };
 
   $scope.createNode = function(){
