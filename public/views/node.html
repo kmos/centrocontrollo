@@ -1,0 +1,17 @@
+<div class="jumbotron text-center">
+  <h2>Node {{ nodeID }}</h2>
+
+  <hr>
+
+  <table ng-table class="table">
+    <tr ng-repeat="sensor in sensors">
+      <td data-title="'ID'">
+        {{ sensor._id }}
+      </td>
+
+      <td data-title="'Class'">
+        {{ sensor.klass }}
+      </td>
+    </tr>
+  </table>
+</div>
