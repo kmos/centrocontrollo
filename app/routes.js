@@ -82,6 +82,20 @@ module.exports = function(app,passport) {
     });
   });
 
+  app.get("/api/rt_measurements/:nodeID/:sensorID", function(req, res) {
+    var sendEvent = initSSE(res);
+
+    var receiveMeasurement = function(message) {
+      sendEvent("measurement", message);
+    };
+
+    board.registerListener(receiveMeasurement, "measurement", req.params.nodeID, req.params.sensorID);
+
+    req.once("end", function() {
+      board.removeListener(receiveMeasurement, "measurement", req.params.nodeID, req.params.sensorID);
+    });
+  });
+
   app.get('/api/measurement', auth, function(req, res){
     Measurement.find(function(err, measurements){
       if(err) res.send(err);

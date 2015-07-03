@@ -1,7 +1,9 @@
-angular.module('SensorCtrl', []).controller('SensorController', function($scope) {
+angular.module('SensorCtrl', []).controller('SensorController', function($scope, $route, $routeParams) {
   $scope.measurements = [];
 
-  /*var measurementEvents = new EventSource("/api/rt_measurements");
+  alert("/api/rt_measurements/" + $routeParams.nodeID + "/" + $routeParams.sensorID);
+
+  var measurementEvents = new EventSource("/api/rt_measurements/" + $routeParams.nodeID + "/" + $routeParams.sensorID);
 
   measurementEvents.addEventListener("measurement", function(event) {
     var measurement = JSON.parse(event.data);
@@ -10,13 +12,11 @@ angular.module('SensorCtrl', []).controller('SensorController', function($scope)
     }
 
     $scope.measurements.unshift({
-      nodeID: measurement.nodeId,
-      sensorID: measurement.sensorId,
       timestamp: measurement.timestamp,
       value: measurement.value,
     });
 
     $scope.$apply();
-  });*/
+  });
 });
 
