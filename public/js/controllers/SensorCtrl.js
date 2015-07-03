@@ -1,4 +1,4 @@
-angular.module('SensorCtrl', []).controller('SensorController', function($scope, $route, $routeParams) {
+angular.module('SensorCtrl', []).controller('SensorController', ["$scope", "$routeParams", "$http", function($scope, $routeParams, $http) {
   $scope.measurements = [];
 
   var measurementEvents = new EventSource("/api/rt_measurements/" + $routeParams.nodeID + "/" + $routeParams.sensorID);
@@ -16,5 +16,8 @@ angular.module('SensorCtrl', []).controller('SensorController', function($scope,
 
     $scope.$apply();
   });
-});
 
+  $scope.launchMeasurement = function() {
+    $http.get("/api/rt_measurements/launch/" + $routeParams.nodeID + "/" + $routeParams.sensorID)
+  };
+}]);

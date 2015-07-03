@@ -96,6 +96,10 @@ module.exports = function(app,passport) {
     });
   });
 
+  app.get("/api/rt_measurements/launch/:nodeID/:sensorID", function(req, res) {
+    board.askForMeasurement(req.params.nodeID, req.params.sensorID);
+  });
+
   app.get('/api/measurement', auth, function(req, res){
     Measurement.find(function(err, measurements){
       if(err) res.send(err);
