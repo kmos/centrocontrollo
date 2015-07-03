@@ -26,9 +26,23 @@ FakeSerialPort.prototype.open = function(callback) {
 };
 
 FakeSerialPort.prototype.write = function(buffer, callback) {
-  setTimeout(function() {
-    callback();
-  }, 0);
+  setTimeout((function() {
+    var message = JSON.parse(buffer);
+
+    if (message.type === "measurement") {
+      var reply = {
+        type: "measurement",
+        nodeId: message.nodeID,
+        sensorId: message.sensorID,
+        timestamp: Date.now(),
+        value: Math.floor(Math.random() * 100),
+      };
+
+      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(reply)));
+    }
+
+    callback && callback();
+  }).bind(this), 5000);
 };
 
 FakeSerialPort.prototype.drain = function(callback) {

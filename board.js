@@ -32,26 +32,20 @@ var Board = function() {
     });
   }).bind(this);
 
-  var serialPort = new SerialPort(config.get('System.serial.port'), {
+  this.serialPort = new SerialPort(config.get('System.serial.port'), {
     baudrate: config.get('System.serial.baudrate')
   }, false);
 
-  serialPort.open(function(err) {
+  this.serialPort.open((function(err) {
     if (err) {
       console.log('Error opening serial: ' + err);
       return;
     }
 
-    serialPort.on('data', function(data) {
+    this.serialPort.on('data', function(data) {
       callListeners(data);
     });
-
-    serialPort.write("ls\n", function(err, results) {
-      if (err) {
-        console.log("Error writing to serial: " + err);
-      }
-    });
-  });
+  }).bind(this));
 };
 
 Board.prototype.registerListener = function(callback, what, nodeId, sensorId) {
@@ -86,6 +80,16 @@ Board.prototype.registerListener = function(callback, what, nodeId, sensorId) {
 
 Board.prototype.removeListener = function(callback, what, nodeId, sensorId) {
   // TODO: Remove listener
+};
+
+Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
+  var message = JSON.stringify({
+    type: "measurement",
+    nodeID: nodeID,
+    sensorID: sensorID,
+  });
+
+  this.serialPort.write(message, callback);
 };
 
 module.exports = new Board();
