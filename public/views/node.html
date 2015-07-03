@@ -4,7 +4,7 @@
   <hr>
 
   <table ng-table class="table">
-    <tr ng-repeat="sensor in sensors">
+    <tr ng-repeat="sensor in sensors" ng-click="setSelected(sensor._id)" class="selectedRow">
       <td data-title="'ID'">
         {{ sensor._id }}
       </td>
