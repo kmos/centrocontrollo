@@ -1,20 +1,25 @@
 # Centro di Controllo Sensori [![Build Status](https://travis-ci.org/kmos/centrocontrollo.svg)](https://travis-ci.org/kmos/centrocontrollo)
 
-#Installation
-Comands to install application dependencies:
+
+## Installation
+1. Install MongoDB
+
+2. Install application dependencies:
 
 ```
 npm install
-```
-
-```
 bower install
 ```
 
-#TODO
-- interfaccia login
-- Monitor/memodatabase
-- comunicazione sched
-- gestione CRUD nodi
-- gestione crud sensore
-- Fase iniziale di setup: (Timestamp,altro che non mi viene in mente ma mi fa ansia)
+
+## Test
+
+1. Install mocha: `npm install -g mocha`
+
+2. Start MongoDB
+
+3. Run, in the top directory:
+```
+node server.js &
+mocha
+```
