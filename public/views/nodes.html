@@ -4,7 +4,7 @@
   <hr>
 
   <table ng-table class="table">
-    <tr ng-repeat="node in nodes">
+    <tr ng-repeat="node in nodes" ng-click="setSelected(node._id)" class="selectedRow">
       <td data-title="'ID'">
         {{ node._id }}
       </td>

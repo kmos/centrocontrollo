@@ -3,7 +3,11 @@ angular.module('NodesCtrl', []).controller('NodesController', ['$scope', 'Nodes'
     $scope.nodes = data;
     $scope.loading = false;
   });
-  
+
+  $scope.setSelected = function(nodeID) {
+    alert(nodeID);
+  };
+
   $scope.createNode = function(){
     if($scope.formData.text != undefined){
       $scope.loading = true;
