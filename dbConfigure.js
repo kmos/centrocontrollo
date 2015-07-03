@@ -3,7 +3,18 @@ var nodes = [
   _id: "0",
   address: "A.A.A",
   connected: false,
-  sensors: [],
+  sensors: [
+  {
+    _id: "0",
+    klass: "Temperature",
+    priority: 0,
+    alarm: true,
+    lowThreshold: 10,
+    highThreshold: 100,
+    periodMs: 1000,
+    measurements: [],
+  },
+  ],
 },
 {
   _id: "1",
