@@ -1,4 +1,4 @@
-var db = require('../config/db');
+var config   = require('config');
 var mongoose = require('mongoose');
 
 before(function(done) {
@@ -11,7 +11,7 @@ before(function(done) {
   }
 
   if (mongoose.connection.readyState === 0) {
-    mongoose.connect(db.url, function(err) {
+    mongoose.connect(config.get('System.dbConfig').address, function(err) {
       if (err) {
         throw err;
       }
