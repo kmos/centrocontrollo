@@ -1,0 +1,12 @@
+{"level":"info","message":"Connect to Mongodb on Mongolab","timestamp":"2015-07-04T12:22:56.164Z"}
+{"level":"info","message":"Server is running on port: 8080 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:22:56.178Z"}
+{"level":"info","message":"Connect to Mongodb on mongodb://localhost/test","timestamp":"2015-07-04T12:24:10.991Z"}
+{"level":"info","message":"Server is running on port: 8080 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:24:11.006Z"}
+{"level":"info","message":"Connect to Mongodb on mongodb://localhost/test","timestamp":"2015-07-04T12:36:24.893Z"}
+{"level":"info","message":"Http Server is running on port: 8080 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:36:24.909Z"}
+{"level":"info","message":"Connect to Mongodb on mongodb://localhost/test","timestamp":"2015-07-04T12:43:57.153Z"}
+{"level":"info","message":"Http Server is running on port: 8080 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:43:57.169Z"}
+{"level":"info","message":"Https Server is running on port: 8080 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:43:57.170Z"}
+{"level":"info","message":"Connect to Mongodb on mongodb://localhost/test","timestamp":"2015-07-04T12:45:19.595Z"}
+{"level":"info","message":"Http Server is running on port: 8080 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:45:19.612Z"}
+{"level":"info","message":"Https Server is running on port: 443 - ip address: 127.0.0.1","timestamp":"2015-07-04T12:45:19.613Z"}
