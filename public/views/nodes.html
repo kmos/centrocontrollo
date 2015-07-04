@@ -1,11 +1,10 @@
 <nav class="navbar navbar-inverse">
   <ul class="nav navbar-nav">
-    <li><a href="#"><i class="fa fa-plus"></i> Inserisci</a></li>
-    <li><a href="#"><i class="fa fa-trash"></i> Elimina</a></li>
-
+    <li><a href="#" ng-click="show = !show"><i class="fa fa-list-ol"></i> Visualizza Nodi</a></li>
+    <li><a href="#" ng-click="insert = !insert"><i class="fa fa-plus"></i> Inserisci Nodo</a></li>
   </ul>
 </nav>
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" ng-show="show">
   <h2>Nodi</h2>
 
   <hr>
@@ -28,20 +27,33 @@
       </td>
       <td data-title="'Operazioni'"> 
       <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-default"><span class="fa fa-eye" aria-hidden="true"></span> dettagli</button>
-          <button type="button" class="btn btn-default"><span class="fa fa-trash-o" aria-hiden="true"></span>elimina</button>
+          <button type="button" class="btn btn-default" ng-click="setSelected(node._id)"><span class="fa fa-eye" aria-hidden="true"></span> dettagli</button>
+          <button type="button" class="btn btn-default" ng-click="DeleteNode(node._id)"><span class="fa fa-trash-o" aria-hiden="true"></span>elimina</button>
         </div>
       </td>
     </tr>
   </table>
 </div>
 
-<div class="jumbotron">
+<div class="jumbotron" ng-show="insert">
   <div class="text-center">
     <h3>Aggiungi un nodo:</h3>
   </div>
-
+  <form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Id nodo</label>
+    <input type="text" class="form-control" ng-model="formData._id" placeholder="Id Nodo">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Indirizzo</label>
+    <input type="text" class="form-control" ng-model="formData.address" placeholder="indirizzo">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="formData.connected"> online
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default" ng-click="createNode()">Inserisci</button>
+</form>
   <hr>
-
-  <input type="text" value="ID" id="ID" />
 </div>
