@@ -49,11 +49,21 @@ module.exports = function(app,passport) {
   });
 
   app.post('/api/nodes', function(req, res) {
-    var node = new Node();
-    node.id = req.body.id;
-
+/*    var node = new Node();
+    node._id = req.body._id;
+    node.address= req.body.address;
+    node.connected = req.body.connected;
     node.save(function(err) {
       if (err) res.send(err);
+    });
+    getNodes(res);
+*/
+    Node.create({
+      _id : req.body._id,
+      address : req.body.address,
+      connected : req.body.connected
+    }, function(err, node){
+      if(err) res.send(err);
       getNodes(res);
     });
   });
