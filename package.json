@@ -16,6 +16,7 @@
     "serial": "latest",
     "method-override": "~2.0.2",
     "ejs": "~0.8.5",
-    "config": "latest"
+    "config": "latest",
+    "winston": "latest"
   }
 }
