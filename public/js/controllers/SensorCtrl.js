@@ -13,11 +13,14 @@ angular.module('SensorCtrl', []).controller('SensorController', ["$scope", "$rou
       timestamp: measurement.timestamp,
       value: measurement.value,
     });
-
+    
+    $scope.loading=false;
     $scope.$apply();
   });
 
   $scope.launchMeasurement = function() {
-    $http.get("/api/rt_measurements/launch/" + $routeParams.nodeID + "/" + $routeParams.sensorID)
+    $scope.loading=true;
+    $http.get("/api/rt_measurements/launch/" + $routeParams.nodeID + "/" + $routeParams.sensorID).success(function(){
+    });
   };
 }]);
