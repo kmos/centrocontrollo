@@ -11,7 +11,7 @@
   <hr>
 
   <table ng-table class="table">
-    <tr ng-repeat="node in nodes" ng-click="setSelected(node._id)" class="selectedRow">
+    <tr ng-repeat="node in nodes" class="selectedRow">
       <td data-title="'ID'">
         {{ node._id }}
       </td>
@@ -21,10 +21,12 @@
       <td data-title="'Connected'">
         {{ node.connected }}
       </td>
-      <td data-title="'del'">
-        <label>
-          <input type="checkbox" ng-click-select="deleteNode(node._id)">
+      <td>
+        <button type="button" class="btn btn-info" ng-click="setSelected(node._id)">dettagli</button>
       </td>
+      <td>
+        <button type="button" class="btn btn-danger" ng-click="DeleteNode(node._id)">elimina</button>
+        </td>
     </tr>
   </table>
 </div>
