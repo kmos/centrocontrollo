@@ -3,9 +3,9 @@
     "servConfig": {
       "ip": "127.0.0.1",
       "http_port": 8080,
-      "https_port": 443,
+      "https_port": 4443,
       "private_key": "./ssl/privatekey.pem",
-      "certificate": "./ssl/certificate.pem"
+      "certificate": "./ssl/certificate.crt"
     },
     "dbConfig": {
       "address": "mongodb://localhost/test"
