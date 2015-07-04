@@ -1,4 +1,6 @@
 angular.module('NodesCtrl', []).controller('NodesController', ['$scope', '$location', 'Nodes', function($scope, $location, Nodes) {
+  $scope.show=true;
+  $scope.insert=false;
   Nodes.get().success(function(data){
     $scope.nodes = data;
     $scope.loading = false;
@@ -9,7 +11,7 @@ angular.module('NodesCtrl', []).controller('NodesController', ['$scope', '$locat
   };
 
   $scope.createNode = function(){
-    if($scope.formData.text != undefined){
+    if($scope.formData._id != undefined){
       $scope.loading = true;
       Nodes.create($scope.formData)
         .success(function(data){
