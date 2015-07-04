@@ -11,7 +11,7 @@ function getLogger(module) {
                 label:      path
             }),
             new winston.transports.File({
-                filename: './log/node.log'
+                filename: './node.log'
             })
         ]
     });
