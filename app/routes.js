@@ -18,6 +18,13 @@ function initSSE(res) {
   }
 }
 
+function getNodes(res){
+  Node.find(function(err, nodes){
+    if(err) res.send(err);
+    res.json(nodes);
+  });
+};
+
 module.exports = function(app,passport) {
   // Define a middleware function to be used for every secured routes
   var auth = function(req, res, next){
@@ -38,13 +45,7 @@ module.exports = function(app,passport) {
   });
 
   app.get('/api/nodes', function(req, res) {
-    Node.find(function(err, nodes) {
-      if (err) {
-        res.send(err);
-      }
-
-      res.json(nodes);
-    });
+    getNodes(res);
   });
 
   app.post('/api/nodes', function(req, res) {
@@ -52,16 +53,13 @@ module.exports = function(app,passport) {
     node.id = req.body.id;
 
     node.save(function(err) {
-      if (err) {
-        res.send(err);
-      }
-
-      res.json({ message: 'Node created!' });
+      if (err) res.send(err);
+      getNodes(res);
     });
   });
   
-  app.put('/api/nodes', auth, function(req, res){
-    Node.findById(req.params.node_id, function(err, node){
+  app.put('/api/nodes/:nodeID', auth, function(req, res){
+    Node.findById(req.params.nodeID, function(err, node){
       if(err) res.send(err);
       //in linea di massima non vanno modificati i parametri del nodo ma i sensori
       node.save(function(err){
@@ -71,10 +69,10 @@ module.exports = function(app,passport) {
     });
   });
   
-  app.delete('/api/nodes', auth, function(req, res){
-    Node.remove({_id: req.params.node_id}, function(err, node){
+  app.delete('/api/nodes/:nodeID', function(req, res){
+    Node.remove({_id: req.params.nodeID}, function(err, node){
       if(err) res.send(err);
-      res.json({ message: 'Successfully deleted'});
+      getNodes(res); 
     });
   });
 
