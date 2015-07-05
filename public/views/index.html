@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="libs/ionicons/css/ionicons.css" />
     <link rel="stylesheet" href="libs/sass-bootstrap-glyphicons/css/bootstrap-glyphicons.css" />
+    <link rel="stylesheet" href="libs/icomoon/dist/css/style.css" />       
     <link rel="stylesheet" href="css/style.css">
 
     <script src="libs/angular/angular.js"></script>
     <script src="libs/angular-route/angular-route.min.js"></script>
     <script src="libs/ng-table/dist/ng-table.min.js"></script>
     <script src="libs/ng-click-select/ng-click-select.js"></script>
+    <script src="libs/icomoon/lte-ie7.js"></script>
     <link rel="stylesheet" href="libs/ng-table/dist/ng-table.min.css">
 
     <script src="js/controllers/MainCtrl.js"></script>
@@ -33,14 +35,14 @@
 <body ng-app="ccApp" ng-controller="ControlPanelController">
 <div class="container">
     <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Dashboard</a>
+        <div >
+           <a class="navbar-brand">Centro di Controllo Rete</a>
         </div>
 
         <ul class="nav navbar-nav" highlight-active-tab="1">
             <li><a href="/Monitor"><i class="fa fa-heartbeat"></i> Monitor</a></li>
-            <li><a href="/Nodes"><i class="ionicons ion-network"></i> Nodi</a></li>
-            <li><a href="/ControlPanel"><i class="fa fa-wrench"></i> Pannello di Controllo</a></li>
+            <li><a href="/Nodes"><i class="ionicons ion-network"></i> Gestione Nodi</a></li>
+            <li><a href="/ControlPanel"><i class="fa fa-wrench"></i> Configurazione Sistema</a></li>
             <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
         </ul>
     </nav>
