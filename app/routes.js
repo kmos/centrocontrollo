@@ -48,16 +48,7 @@ module.exports = function(app,passport) {
     getNodes(res);
   });
 
-  app.post('/api/nodes', function(req, res) {
-/*    var node = new Node();
-    node._id = req.body._id;
-    node.address= req.body.address;
-    node.connected = req.body.connected;
-    node.save(function(err) {
-      if (err) res.send(err);
-    });
-    getNodes(res);
-*/
+  app.post('/api/nodes', function(req, res) {    
     Node.create({
       _id : req.body._id,
       address : req.body.address,
@@ -141,6 +132,16 @@ module.exports = function(app,passport) {
       }
 
       res.json(measurements);
+    });
+  });
+
+  app.get('/api/sensor/:sensorID', function(req, res) {
+    Sensor.find({ _id: req.params.sensorID }, function(err, sensors) {
+      if (err) {
+        res.send(err);
+      }
+
+      res.json(sensors[0]);
     });
   });
 
