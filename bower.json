@@ -11,7 +11,8 @@
         "angular-resource": "~1.3.0",
         "ng-table": "latest",
         "ionicons": "latest",
-        "sass-bootstrap-glyphicons": "latest"
+        "sass-bootstrap-glyphicons": "latest",
+        "icomoon": "latest"
     }
 }
 
