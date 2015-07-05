@@ -1,10 +1,15 @@
-<div class="jumbotron text-center">
-  <h2>Nodo {{ nodeID }}</h2>
+<nav class="navbar navbar-inverse">
+  <ul class="nav navbar-nav">
+      <li><a href="#" ng-click="sens = !sens"><i class="fa fa-list-ol"></i> Visualizza Sensori</a></li>
+          <li><a href="#" ng-click="measurement = !measurement"><i class="icomoon icon-meter"></i> Visualizza Rilevamenti</a></li>
+            </ul>
+</nav>
 
+<div class="jumbotron text-center" ng-show="sens">
+  <h2>Sensori del Nodo: {{ nodeID }}</h2>
   <hr>
-
   <table ng-table class="table">
-    <tr ng-repeat="sensor in sensors" ng-click="setSelected(sensor._id)" class="selectedRow">
+    <tr ng-repeat="sensor in sensors" class="selectedRow">
       <td data-title="'ID'">
         {{ sensor._id }}
       </td>
@@ -12,6 +17,31 @@
       <td data-title="'Class'">
         {{ sensor.klass }}
       </td>
+      </td>
+      <td data-title="'Operazioni'">
+        <button type="button" class="btn btn-default" ng-click="setSelected(sensor._id)"><span class="fa fa-eye" aria-hidden="true"></span> dettagli</button>
+      </td>
     </tr>
   </table>
 </div>
+
+<div class="jumbotron text-center" ng-show="measurement">
+  <h2>Rilevamenti del nodo: {{ nodeID }}</h2>
+  <hr>
+  <table ng-table class="table">
+    <tr ng-repeat="sensor in sensors" class="selectedRow">
+      <td data-title="'ID'">
+        {{ sensor._id }}
+      </td>
+
+      <td data-title="'Class'">
+        {{ sensor.klass }}
+      </td>
+      <td data-title="'Operazioni'">
+        <button type="button" class="btn btn-default" ng-click="setSelected(sensor._id)"><span class="fa fa-eye" aria-hidden="true"></span> dettagli</button>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
