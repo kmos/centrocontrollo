@@ -48,12 +48,12 @@
         </ul>
     </nav>
 
-    <div ng-view></div>
-
     <div class="alert alert-danger alert-dismissible" role="alert" ng-show="alert" ng-controller="AlarmController">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="alert = false"><span aria-hidden="true">&times;</span></button>
         <img src="images/alert.jpg"><a href="{{ alarmURL }}" ng-click="alert = false">{{ alarmContent }}</a>
     </div>
+
+    <div ng-view></div>
 </div>
 </body>
 </html>
