@@ -86,7 +86,12 @@ conn.once("open", function() {
       _id: message.nodeId,
     }, function(err, nodes) {
       if (err) {
-        console.log("Node not found: " + err);
+        logs.error("Error while querying nodes: " + err);
+        return;
+      }
+
+      if (nodes.length === 0) {
+        logs.error("Node not found");
         return;
       }
 
@@ -98,11 +103,53 @@ conn.once("open", function() {
 
       node.save(function(err) {
         if (err) {
-          console.log("Error while saving measurement: " + err);
+          logs.error("Error while saving measurement: " + err);
         }
       });
     });
   }, "measurement");
+
+  board.registerListener(function(message) {
+    Node.find({
+      _id: message.nodeID,
+    }, function(err, nodes) {
+      if (err) {
+        logs.error("Error while querying nodes: " + err);
+        return;
+      }
+
+      if (nodes.length === 0) {
+        logs.error("canJoin from an unauthorized node: " + message.nodeID);
+      }
+
+      board.replyCanJoin(message.nodeID, nodes.length !== 0);
+    });
+  }, "canJoin");
+
+  board.registerListener(function(message) {
+    Node.find({
+      _id: message.nodeID,
+    }, function(err, nodes) {
+      if (err) {
+        logs.error("Error while querying nodes: " + err);
+        return;
+      }
+
+      if (nodes.length === 0) {
+        logs.error("Node not found");
+        return;
+      }
+
+      var node = nodes[0];
+      node.connected = true;
+
+      node.save(function(err) {
+        if (err) {
+          logs.error("Error while updating node state: " + err);
+        }
+      });
+    });
+  }, "join");
 });
 
 // expose app           
