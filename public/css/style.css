@@ -5,3 +5,15 @@
 .selectedRow:hover {
   background-color: #CCCACA;
 }
+
+.alert img {
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 10px;
+  width: 150px;
+}
+
+.alert a {
+  vertical-align: middle;
+  display: inline-block;
+}

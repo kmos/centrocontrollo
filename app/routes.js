@@ -77,6 +77,22 @@ module.exports = function(app,passport) {
     });
   });
 
+  app.get("/api/alarms", function(req, res) {
+    var sendEvent = initSSE(res);
+
+    var receiveMeasurement = function(message) {
+      if (message.alarm) {
+        sendEvent("alarm", message);
+      }
+    };
+
+    board.registerListener(receiveMeasurement, "measurement");
+
+    req.once("end", function() {
+      board.removeListener(receiveMeasurement, "measurement");
+    });
+  });
+
   app.get("/api/rt_measurements", function(req, res) {
     var sendEvent = initSSE(res);
 

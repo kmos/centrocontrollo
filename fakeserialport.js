@@ -19,10 +19,25 @@ FakeSerialPort.prototype.open = function(callback) {
         sensorId: Math.floor(Math.random() * 5),
         timestamp: Date.now(),
         value: Math.floor(Math.random() * 100),
+        alarm: false,
       };
 
       this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(message)));
     }).bind(this), 5000);
+
+    // Send a fake alarm every 10 seconds
+    setInterval((function() {
+      var message = {
+        type: "measurement",
+        nodeId: Math.floor(Math.random() * 5),
+        sensorId: Math.floor(Math.random() * 5),
+        timestamp: Date.now(),
+        value: Math.floor(Math.random() * 100),
+        alarm: true,
+      };
+
+      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(message)));
+    }).bind(this), 10000);
 
     // Send a fake canJoin request every 20 seconds
     setInterval((function() {
@@ -49,6 +64,7 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
         sensorId: message.sensorID,
         timestamp: Date.now(),
         value: Math.floor(Math.random() * 100),
+        alarm: Math.floor(Math.random() * 2) ? true : false,
       };
     } else if (message.type === "canJoin") {
       if (message.reply === 1) {

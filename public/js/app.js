@@ -8,6 +8,7 @@ angular.module('ccApp', [
   'NodesCtrl',
   'NodesService',
   'MonitorCtrl',
+  'AlarmCtrl',
   'NodeCtrl',
   'SensorCtrl',
   'LogoutCtrl',

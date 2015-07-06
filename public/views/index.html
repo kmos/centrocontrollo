@@ -26,6 +26,7 @@
     <script src="js/controllers/NodesCtrl.js"></script>
     <script src="js/services/NodesService.js"></script>
     <script src="js/controllers/MonitorCtrl.js"></script>
+    <script src="js/controllers/AlarmCtrl.js"></script>
     <script src="js/controllers/NodeCtrl.js"></script>
     <script src="js/controllers/SensorCtrl.js"></script>
     <script src="js/controllers/LogoutCtrl.js"></script>
@@ -48,6 +49,11 @@
     </nav>
 
     <div ng-view></div>
+
+    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="alert" ng-controller="AlarmController">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="alert = false"><span aria-hidden="true">&times;</span></button>
+        <img src="images/alert.jpg"><a href="{{ alarmURL }}" ng-click="alert = false">{{ alarmContent }}</a>
+    </div>
 </div>
 </body>
 </html>
