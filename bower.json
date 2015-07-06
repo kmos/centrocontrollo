@@ -12,7 +12,8 @@
         "ng-table": "latest",
         "ionicons": "latest",
         "sass-bootstrap-glyphicons": "latest",
-        "icomoon": "latest"
+        "icomoon": "latest",
+        "sigma": "latest"
     }
 }
 
