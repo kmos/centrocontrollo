@@ -1,8 +1,4 @@
-// server.js
-
-// modules =================================================
 var express        = require('express');
-var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose       = require('mongoose');
@@ -15,6 +11,11 @@ var http           = require('http');
 var https          = require('https');
 var fs             = require('fs');
 var crypto         = require('crypto');
+var board          = require('./board');
+var Node           = require('./app/models/node');
+
+var app            = express();
+
 // configuration ===========================================
 var logs = require("./config/logger")(module);
 require('./config/passport')(passport, config); // passport config
@@ -79,6 +80,29 @@ conn.once("open", function() {
   /*https.createServer(op, app).listen(HTTPSport, function() {
     logs.info('HTTPS server is running on %s:%d', ipAddr, HTTPSport);
   });*/
+
+  board.registerListener(function(message) {
+    Node.find({
+      _id: message.nodeId,
+    }, function(err, nodes) {
+      if (err) {
+        console.log("Node not found: " + err);
+        return;
+      }
+
+      var node = nodes[0];
+      node.sensors[message.sensorId].measurements.push({
+        timestamp: new Date(message.timestamp),
+        value: message.value,
+      });
+
+      node.save(function(err) {
+        if (err) {
+          console.log("Error while saving measurement: " + err);
+        }
+      });
+    });
+  }, "measurement");
 });
 
 // expose app           
