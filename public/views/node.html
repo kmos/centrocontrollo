@@ -1,11 +1,4 @@
-<nav class="navbar navbar-inverse">
-  <ul class="nav navbar-nav">
-      <li><a href="#" ng-click="sens = !sens"><i class="fa fa-list-ol"></i> Visualizza Sensori</a></li>
-          <li><a href="#" ng-click="measurement = !measurement"><i class="icomoon icon-meter"></i> Visualizza Rilevamenti</a></li>
-            </ul>
-</nav>
-
-<div class="jumbotron text-center" ng-show="sens">
+<div class="jumbotron text-center">
   <h2>Sensori del Nodo: {{ nodeID }}</h2>
   <hr>
   <table ng-table class="table">
@@ -25,7 +18,7 @@
   </table>
 </div>
 
-<div class="jumbotron text-center" ng-show="measurement">
+<div class="jumbotron text-center">
   <h2>Rilevamenti del nodo: {{ nodeID }}</h2>
   <hr>
   <table ng-table class="table">
@@ -40,4 +33,3 @@
     </tr>
   </table>
 </div>
-

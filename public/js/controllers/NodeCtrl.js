@@ -1,5 +1,4 @@
 angular.module('NodeCtrl', []).controller('NodeController', ["$scope", "$routeParams", "$http", "$location", function($scope, $routeParams, $http, $location) {
-  $scope.sens= true;
   $scope.nodeID = $routeParams.nodeID;
   $scope.sensors = [];
   $scope.measurements = [];
