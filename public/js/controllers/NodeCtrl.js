@@ -10,7 +10,9 @@ angular.module('NodeCtrl', []).controller('NodeController', ["$scope", "$routePa
       return sensor.measurements;
     }).reduce(function(prev, cur) {
       return prev.concat(cur);
-    }, []);
+    }).sort(function(a, b) {
+      return a.timestamp < b.timestamp;
+    });
   });
 
   $scope.setSelected = function(sensorID) {
