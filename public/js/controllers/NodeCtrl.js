@@ -2,9 +2,15 @@ angular.module('NodeCtrl', []).controller('NodeController', ["$scope", "$routePa
   $scope.sens= true;
   $scope.nodeID = $routeParams.nodeID;
   $scope.sensors = [];
+  $scope.measurements = [];
 
   $http.get("/api/nodes/" + $routeParams.nodeID).success(function(data) {
     $scope.sensors = data.sensors;
+    $scope.measurements = data.sensors.map(function(sensor) {
+      return sensor.measurements;
+    }).reduce(function(prev, cur) {
+      return prev.concat(cur);
+    }, []);
   });
 
   $scope.setSelected = function(sensorID) {

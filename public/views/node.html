@@ -29,17 +29,13 @@
   <h2>Rilevamenti del nodo: {{ nodeID }}</h2>
   <hr>
   <table ng-table class="table">
-    <tr ng-repeat="sensor in sensors" class="selectedRow">
-      <td data-title="'ID'">
-        {{ sensor._id }}
+    <tr ng-repeat="measurement in measurements" class="selectedRow">
+      <td data-title="'Timestamp'">
+        {{ measurement.timestamp }}
       </td>
 
-      <td data-title="'Class'">
-        {{ sensor.klass }}
-      </td>
-      <td data-title="'Operazioni'">
-        <button type="button" class="btn btn-default" ng-click="setSelected(sensor._id)"><span class="fa fa-eye" aria-hidden="true"></span> dettagli</button>
-
+      <td data-title="'Value'">
+        {{ measurement.value }}
       </td>
     </tr>
   </table>
