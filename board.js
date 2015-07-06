@@ -92,4 +92,14 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
   this.serialPort.write(message, callback);
 };
 
+Board.prototype.replyCanJoin = function(nodeID, reply, callback) {
+  var message = JSON.stringify({
+    type: "canJoin",
+    nodeID: nodeID,
+    reply: reply ? 1 : 0,
+  });
+
+  this.serialPort.write(message, callback);
+}
+
 module.exports = new Board();
