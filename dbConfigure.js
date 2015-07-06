@@ -3,18 +3,7 @@ var nodes = [
   _id: "0",
   address: "A.A.A",
   connected: false,
-  sensors: [
-  {
-    _id: "0",
-    klass: "Temperature",
-    priority: 0,
-    alarm: true,
-    lowThreshold: 10,
-    highThreshold: 100,
-    periodMs: 1000,
-    measurements: [],
-  },
-  ],
+  sensors: [],
 },
 {
   _id: "1",
@@ -41,6 +30,64 @@ var nodes = [
   sensors: [],
 },
 ];
+
+// Add 4 sensors in each node
+nodes = nodes.map(function(node) {
+  node.sensors = [
+  {
+    _id: "0",
+    klass: "Temperature",
+    priority: 0,
+    alarm: true,
+    lowThreshold: 10,
+    highThreshold: 100,
+    periodMs: 1000,
+    measurements: [],
+  },
+  {
+    _id: "1",
+    klass: "Temperature",
+    priority: 0,
+    alarm: true,
+    lowThreshold: 10,
+    highThreshold: 100,
+    periodMs: 1000,
+    measurements: [],
+  },
+  {
+    _id: "2",
+    klass: "Temperature",
+    priority: 0,
+    alarm: true,
+    lowThreshold: 10,
+    highThreshold: 100,
+    periodMs: 1000,
+    measurements: [],
+  },
+  {
+    _id: "3",
+    klass: "Temperature",
+    priority: 0,
+    alarm: true,
+    lowThreshold: 10,
+    highThreshold: 100,
+    periodMs: 1000,
+    measurements: [],
+  },
+  {
+    _id: "4",
+    klass: "Temperature",
+    priority: 0,
+    alarm: true,
+    lowThreshold: 10,
+    highThreshold: 100,
+    periodMs: 1000,
+    measurements: [],
+  },
+  ];
+
+  return node;
+});
 
 db.dropDatabase();
 
