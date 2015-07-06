@@ -25,7 +25,6 @@ var HTTPport = servConfig.http_port;
 var HTTPSport = servConfig.https_port;
 var privatekey = servConfig.private_key;
 var certificate = servConfig.certificate;
-var ip_add = servConfig.ip;
 // connect to our mongoDB database 
 mongoose.connect(dbConfig.address);
 var conn = mongoose.connection;
@@ -70,26 +69,17 @@ app.use(flash());
 // routes ==================================================
 require('./app/routes')(app,passport); // configure our routes
 
-// start app ===============================================
-// startup our app at http://localhost:8080
-app.listen(HTTPport);
-
-// Start the server
-/*
-conn.once('open', function() {
-  // Wait for the database connection to establish, then start the app.        
+conn.once("open", function() {
   logs.info('Connect to Mongodb on %s', dbConfig.address);
-  //Http server
-  var HTTPserver = http.createServer(app).listen(HTTPport, ip_add, function() {
-   logs.info('Http Server is running on port: %d - ip address: %s', HTTPport, ip_add);
-  });      
-  //Https server to correctly run use root privilege
-  var HTTPSserver = https.createServer(op, app).listen(HTTPSport, function(){
-    logs.info('Https Server is running on port: %d - ip address: %s', HTTPSport, ip_add);
-  }); 
-});
-*/
 
+  http.createServer(app).listen(HTTPport, servConfig.ip, function() {
+   logs.info('HTTP server is running on %s:%d', servConfig.ip, HTTPport);
+  });
+
+  /*https.createServer(op, app).listen(HTTPSport, function() {
+    logs.info('HTTPS server is running on %s:%d', ipAddr, HTTPSport);
+  });*/
+});
 
 // expose app           
 exports = module.exports = app; 
