@@ -40,25 +40,29 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
   setTimeout((function() {
     var message = JSON.parse(buffer);
 
+    var reply;
+
     if (message.type === "measurement") {
-      var reply = {
+      reply = {
         type: "measurement",
         nodeId: message.nodeID,
         sensorId: message.sensorID,
         timestamp: Date.now(),
         value: Math.floor(Math.random() * 100),
       };
-
-      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(reply)));
-    }
-
-    if (message.type === "canJoin") {
+    } else if (message.type === "canJoin") {
       if (message.reply === 1) {
-        console.log("canJoin!");
-        // XXX: Send a join now!
+        reply = {
+          type: "join",
+          nodeID: message.nodeID,
+        };
       } else {
         console.log("noCanJoin!");
       }
+    }
+
+    if (reply) {
+      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(reply)));
     }
 
     callback && callback();
