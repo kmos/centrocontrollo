@@ -3,6 +3,8 @@ const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
 const DATA_PACKET_TYPE = 0x02;
 const CANJOIN_PACKET_TYPE = 0x03;
+const CANJOINREPLY_PACKET_TYPE = 0x04;
+const JOIN_PACKET_TYPE = 0x05;
 
 function buildMeasurementPacket(nodeAddress, sensorID, alarm) {
   var reply = new Buffer(OFFSET_START + 12);
@@ -22,8 +24,18 @@ function buildCanJoinPacket(nodeID) {
 
   reply.writeUInt8(CANJOIN_PACKET_TYPE, OFFSET_TYPE);
 
-  var nodeIDbytes = new Buffer(nodeID);
-  nodeIDbytes.copy(reply, OFFSET_START);
+  var nodeIDBytes = new Buffer(nodeID);
+  nodeIDBytes.copy(reply, OFFSET_START);
+
+  return reply;
+}
+
+function buildJoinPacket(nodeIDBytes) {
+  var reply = new Buffer(OFFSET_START + 12);
+
+  reply.writeUInt8(JOIN_PACKET_TYPE, OFFSET_TYPE);
+
+  nodeIDBytes.copy(reply, OFFSET_START);
 
   return reply;
 }
@@ -74,29 +86,37 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
 
   var reply;
 
-  if (packetType === READDATA_PACKET_TYPE) {
-    var nodeAddress = buffer.readUInt16BE(OFFSET_START);
-    var sensorID = buffer.readUInt8(OFFSET_START + 2);
+  switch (packetType) {
+    case READDATA_PACKET_TYPE:
+      var nodeAddress = buffer.readUInt16BE(OFFSET_START);
+      var sensorID = buffer.readUInt8(OFFSET_START + 2);
 
-    reply = buildMeasurementPacket(nodeAddress, sensorID, Math.floor(Math.random() * 2));
-  }
+      reply = buildMeasurementPacket(nodeAddress, sensorID, Math.floor(Math.random() * 2));
+    break;
 
-  setTimeout((function() {
-    /*var message = JSON.parse(buffer);
+    case CANJOINREPLY_PACKET_TYPE:
+      var nodeID = buffer.slice(OFFSET_START, OFFSET_START + 12);
+      var secretKey = buffer.slice(OFFSET_START + 12);
 
-    if (message.type === "measurement") {
+      var isNull = true;
+      for (var i = 0; i < 16; i++) {
+        if (secretKey[i] !== 0) {
+          isNull = false;
+        }
+      }
 
-    } else if (message.type === "canJoin") {
-      if (message.reply === 1) {
-        reply = {
-          type: "join",
-          nodeID: message.nodeID,
-        };
+      if (!isNull) {
+        reply = buildJoinPacket(nodeID);
       } else {
         console.log("noCanJoin!");
       }
-    }*/
+    break;
 
+    default:
+      console.log("FakeSerialPort received an unknown packet: " + packetType);
+  }
+
+  setTimeout((function() {
     if (reply) {
       this.eventHandlers["data"] && this.eventHandlers["data"](reply);
     }

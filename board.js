@@ -7,6 +7,8 @@ const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
 const DATA_PACKET_TYPE = 0x02;
 const CANJOIN_PACKET_TYPE = 0x03;
+const CANJOINREPLY_PACKET_TYPE = 0x04;
+const JOIN_PACKET_TYPE = 0x05;
 
 var Board = function() {
   this.eventListeners = {};
@@ -73,12 +75,19 @@ var Board = function() {
       case CANJOIN_PACKET_TYPE:
         callListeners({
           type: "canJoin",
-          nodeID: buffer.slice(1).toString('base64'),
+          nodeID: buffer.slice(OFFSET_START).toString('base64'),
+        });
+      break;
+
+      case JOIN_PACKET_TYPE:
+        callListeners({
+          type: "join",
+          nodeID: buffer.slice(OFFSET_START).toString('base64'),
         });
       break;
 
       default:
-        console.log("RECEIVED UNSUPPORTED MESSAGE");
+        console.log("RECEIVED UNSUPPORTED MESSAGE: " + packetType);
         console.log(buffer);
     }
   };
@@ -156,14 +165,18 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
   }).bind(this));
 };
 
-Board.prototype.replyCanJoin = function(nodeID, reply, callback) {
-  /*var message = JSON.stringify({
-    type: "canJoin",
-    nodeID: nodeID,
-    reply: reply ? 1 : 0,
-  });
+Board.prototype.replyCanJoin = function(nodeID, secretKey, callback) {
+  var buffer = new Buffer(OFFSET_START + 28);
 
-  this.serialPort.write(message, callback);*/
+  buffer.writeUInt8(CANJOINREPLY_PACKET_TYPE, OFFSET_TYPE);
+
+  var nodeIDBytes = new Buffer(nodeID, "base64");
+  nodeIDBytes.copy(buffer, OFFSET_START);
+
+  var secretKeyBytes = new Buffer(secretKey, "base64");
+  secretKeyBytes.copy(buffer, OFFSET_START + 12);
+
+  this.serialPort.write(buffer, callback);
 };
 
 module.exports = new Board();

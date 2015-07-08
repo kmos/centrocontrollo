@@ -109,6 +109,9 @@ conn.once("open", function() {
     });
   }, "measurement");
 
+  var nullSecretKey = new Buffer(16);
+  nullSecretKey.fill(0);
+
   board.registerListener(function(message) {
     Node.find({
       _id: message.nodeID,
@@ -120,9 +123,11 @@ conn.once("open", function() {
 
       if (nodes.length === 0) {
         logs.error("canJoin from an unauthorized node: " + message.nodeID);
+        board.replyCanJoin(message.nodeID, nullSecretKey);
+      } else {
+        board.replyCanJoin(message.nodeID, nodes[0].secretKey);
       }
 
-      board.replyCanJoin(message.nodeID, nodes.length !== 0);
     });
   }, "canJoin");
 
