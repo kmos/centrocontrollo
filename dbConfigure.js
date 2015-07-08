@@ -1,30 +1,35 @@
 var nodes = [
 {
   _id: "AAAAAAAAAAAAAAAA",
+  secretKey: "AAAAAAAAAAAAAAAAAAAAAA==",
   address: "0",
   connected: false,
   sensors: [],
 },
 {
   _id: "AAAAAAAAAAAAAAAB",
+  secretKey: "AAAAAAAAAAAAAAAAAAAAAQ==",
   address: "1",
   connected: false,
   sensors: [],
 },
 {
   _id: "AAAAAAAAAAAAAAAC",
+  secretKey: "AAAAAAAAAAAAAAAAAAAAAg==",
   address: "2",
   connected: false,
   sensors: [],
 },
 {
   _id: "AAAAAAAAAAAAAAAD",
+  secretKey: "AAAAAAAAAAAAAAAAAAAAAw==",
   address: "3",
   connected: false,
   sensors: [],
 },
 {
   _id: "AAAAAAAAAAAAAAAE",
+  secretKey: "AAAAAAAAAAAAAAAAAAAABA==",
   address: "4",
   connected: false,
   sensors: [],
