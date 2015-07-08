@@ -15,7 +15,7 @@
       "password": "porco"
     },
     "serial": {
-      "port": "/dev/ACM0",
+      "port": "/dev/ttyACM0",
       "baudrate": 115200
     }
   }
