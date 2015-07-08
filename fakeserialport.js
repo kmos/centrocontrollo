@@ -77,7 +77,7 @@ FakeSerialPort.prototype.open = function(callback) {
       var message = buildCanJoinPacket(nodeID);
 
       this.eventHandlers["data"] && this.eventHandlers["data"](message);
-    }).bind(this), 2000);
+    }).bind(this), 20000);
   }).bind(this), 0);
 };
 

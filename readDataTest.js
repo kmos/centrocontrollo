@@ -13,25 +13,30 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error: '
 mongoose.connection.once("open", function() {
   logs.info('Connect to Mongodb on %s', dbConfig.address);
 
+  function logMessage(message) {
+    console.log("received: " + JSON.stringify(message));
+  }
+
+  board.registerListener(logMessage, "measurement");
+
   board.registerListener(function(message) {
-    Node.find({
-      _id: message.nodeId,
-    }, function(err, nodes) {
-      if (err) {
-        logs.error("Error while querying nodes: " + err);
-        return;
-      }
+    logMessage(message);
 
-      if (nodes.length === 0) {
-        logs.error("Node not found");
-        return;
-      }
+    var nullSecretKey = new Buffer(16);
+    nullSecretKey.fill(0);
 
-      console.log("MEASUREMENT: " + JSON.stringify(message));
+    setTimeout(function() {
+      board.replyCanJoin(message.nodeID, nullSecretKey, function() {
+        console.log("CANJOINREPLY packet sent");
+      });
+    }, 5000);
+  }, "canJoin");
+
+  board.registerListener(logMessage, "join");
+
+  setInterval(function() {
+    board.askForMeasurement("AAAAAAAAAAAAAAAA", "0", function() {
+      console.log("READDATA packet sent");
     });
-  }, "measurement");
-
-  board.askForMeasurement("AAAAAAAAAAAAAAAA", "0", function() {
-    console.log("READDATA packet sent");
-  });
+  }, 5000);
 });
