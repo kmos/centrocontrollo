@@ -6,6 +6,7 @@ const OFFSET_TYPE = 0;
 const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
 const DATA_PACKET_TYPE = 0x02;
+const CANJOIN_PACKET_TYPE = 0x03;
 
 var Board = function() {
   this.eventListeners = {};
@@ -39,35 +40,46 @@ var Board = function() {
   var receiveMessage = function(buffer) {
     var packetType = buffer.readUInt8(OFFSET_TYPE);
 
-    if (packetType === DATA_PACKET_TYPE) {
-      var nodeAddress = buffer.readUInt16BE(OFFSET_START);
+    switch (packetType) {
+      case DATA_PACKET_TYPE:
+        var nodeAddress = buffer.readUInt16BE(OFFSET_START);
 
-      // XXX: Fix callers to expect a node address instead of a node ID.
-      Node.find({
-        address: nodeAddress,
-      }, function(err, nodes) {
-        if (err) {
-          console.log("Error while retrieving node: " + err);
-          return;
-        }
+        // XXX: Fix callers to expect a node address instead of a node ID.
+        Node.find({
+          address: nodeAddress,
+        }, function(err, nodes) {
+          if (err) {
+            console.log("Error while retrieving node: " + err);
+            return;
+          }
 
-        if (nodes.length === 0) {
-          console.log("No nodes found with address = " + nodeAddress);
-          return;
-        }
+          if (nodes.length === 0) {
+            console.log("No nodes found with address = " + nodeAddress);
+            return;
+          }
 
-        callListeners({
-          type: "measurement",
-          nodeId: nodes[0]._id,
-          sensorId: buffer.readUInt8(OFFSET_START + 2),
-          timestamp: buffer.readUInt32BE(OFFSET_START + 3),
-          value: buffer.readUInt32BE(OFFSET_START + 7),
-          alarm: buffer.readUInt8(OFFSET_START + 11),
+          callListeners({
+            type: "measurement",
+            nodeId: nodes[0]._id,
+            sensorId: buffer.readUInt8(OFFSET_START + 2),
+            timestamp: buffer.readUInt32BE(OFFSET_START + 3),
+            value: buffer.readUInt32BE(OFFSET_START + 7),
+            alarm: buffer.readUInt8(OFFSET_START + 11),
+          });
         });
-      });
-    } else {
-      console.log("RECEIVED UNSUPPORTED MESSAGE");
-      console.log(buffer);
+
+        break;
+
+      case CANJOIN_PACKET_TYPE:
+        callListeners({
+          type: "canJoin",
+          nodeID: buffer.slice(1).toString('base64'),
+        });
+      break;
+
+      default:
+        console.log("RECEIVED UNSUPPORTED MESSAGE");
+        console.log(buffer);
     }
   };
 
@@ -145,13 +157,13 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
 };
 
 Board.prototype.replyCanJoin = function(nodeID, reply, callback) {
-  var message = JSON.stringify({
+  /*var message = JSON.stringify({
     type: "canJoin",
     nodeID: nodeID,
     reply: reply ? 1 : 0,
   });
 
-  this.serialPort.write(message, callback);
+  this.serialPort.write(message, callback);*/
 };
 
 module.exports = new Board();

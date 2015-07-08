@@ -2,6 +2,7 @@ const OFFSET_TYPE = 0;
 const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
 const DATA_PACKET_TYPE = 0x02;
+const CANJOIN_PACKET_TYPE = 0x03;
 
 function buildMeasurementPacket(nodeAddress, sensorID, alarm) {
   var reply = new Buffer(OFFSET_START + 12);
@@ -12,6 +13,17 @@ function buildMeasurementPacket(nodeAddress, sensorID, alarm) {
   reply.writeUInt32BE(Date.now() | 0, OFFSET_START + 3);
   reply.writeUInt32BE(Math.floor(Math.random() * 100), OFFSET_START + 7);
   reply.writeUInt8(alarm, OFFSET_START + 11);
+
+  return reply;
+}
+
+function buildCanJoinPacket(nodeID) {
+  var reply = new Buffer(OFFSET_START + 12);
+
+  reply.writeUInt8(CANJOIN_PACKET_TYPE, OFFSET_TYPE);
+
+  var nodeIDbytes = new Buffer(nodeID);
+  nodeIDbytes.copy(reply, OFFSET_START);
 
   return reply;
 }
@@ -48,14 +60,12 @@ FakeSerialPort.prototype.open = function(callback) {
     }).bind(this), 10000);
 
     // Send a fake canJoin request every 20 seconds
-    /*setInterval((function() {
-      var message = {
-        type: "canJoin",
-        nodeID: Math.floor(Math.random() * 100),
-      };
+    setInterval((function() {
+      var nodeID = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Math.floor(Math.random() * 100)];
+      var message = buildCanJoinPacket(nodeID);
 
-      this.eventHandlers["data"] && this.eventHandlers["data"](new Buffer(JSON.stringify(message)));
-    }).bind(this), 20000);*/
+      this.eventHandlers["data"] && this.eventHandlers["data"](message);
+    }).bind(this), 2000);
   }).bind(this), 0);
 };
 
