@@ -1,31 +1,31 @@
 var nodes = [
 {
   _id: "0",
-  address: "A.A.A",
+  address: "0",
   connected: false,
   sensors: [],
 },
 {
   _id: "1",
-  address: "B.B.B",
+  address: "1",
   connected: false,
   sensors: [],
 },
 {
   _id: "2",
-  address: "C.C.C",
+  address: "2",
   connected: false,
   sensors: [],
 },
 {
   _id: "3",
-  address: "D.D.D",
+  address: "3",
   connected: false,
   sensors: [],
 },
 {
   _id: "4",
-  address: "E.E.E",
+  address: "4",
   connected: false,
   sensors: [],
 },
