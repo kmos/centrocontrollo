@@ -10,10 +10,10 @@ function buildMeasurementPacket(nodeAddress, sensorID, alarm) {
   var reply = new Buffer(OFFSET_START + 12);
 
   reply.writeUInt8(DATA_PACKET_TYPE, OFFSET_TYPE);
-  reply.writeUInt16BE(nodeAddress, OFFSET_START);
+  reply.writeUInt16LE(nodeAddress, OFFSET_START);
   reply.writeUInt8(sensorID, OFFSET_START + 2);
-  reply.writeUInt32BE(Date.now() | 0, OFFSET_START + 3);
-  reply.writeUInt32BE(Math.floor(Math.random() * 100), OFFSET_START + 7);
+  reply.writeUInt32LE(Date.now() | 0, OFFSET_START + 3);
+  reply.writeUInt32LE(Math.floor(Math.random() * 100), OFFSET_START + 7);
   reply.writeUInt8(alarm, OFFSET_START + 11);
 
   return reply;
@@ -88,7 +88,7 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
 
   switch (packetType) {
     case READDATA_PACKET_TYPE:
-      var nodeAddress = buffer.readUInt16BE(OFFSET_START);
+      var nodeAddress = buffer.readUInt16LE(OFFSET_START);
       var sensorID = buffer.readUInt8(OFFSET_START + 2);
 
       reply = buildMeasurementPacket(nodeAddress, sensorID, Math.floor(Math.random() * 2));
