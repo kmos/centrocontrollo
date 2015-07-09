@@ -6,10 +6,23 @@ var Node       = require('./app/models/node');
 const OFFSET_TYPE = 0;
 const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
+const READDATA_PACKET_LENGTH = 4;
 const DATA_PACKET_TYPE = 0x02;
+const DATA_PACKET_LENGTH = 13;
 const CANJOIN_PACKET_TYPE = 0x03;
+const CANJOIN_PACKET_LENGTH = 13;
 const CANJOINREPLY_PACKET_TYPE = 0x04;
+const CANJOINREPLY_PACKET_LENGTH = 29;
 const JOIN_PACKET_TYPE = 0x05;
+const JOIN_PACKET_LENGTH = 13;
+
+var packetLengths = {
+  0: 4,
+  2: 13,
+  3: 13,
+  4: 29,
+  5: 13,
+};
 
 var Board = function() {
   this.eventListeners = {};
@@ -41,55 +54,72 @@ var Board = function() {
   }).bind(this);
 
   var receiveMessage = function(buffer) {
-    var packetType = buffer.readUInt8(OFFSET_TYPE);
+    var received = buffer.length;
 
-    switch (packetType) {
-      case DATA_PACKET_TYPE:
-        var nodeAddress = buffer.readUInt16LE(OFFSET_START);
+    while (received != 0) {
+      var packetType = buffer.readUInt8(OFFSET_TYPE);
 
-        // XXX: Fix callers to expect a node address instead of a node ID.
-        Node.find({
-          address: nodeAddress,
-        }, function(err, nodes) {
-          if (err) {
-            console.log("Error while retrieving node: " + err);
-            return;
-          }
+      switch (packetType) {
+        case DATA_PACKET_TYPE:
+          var nodeAddress = buffer.readUInt16LE(OFFSET_START);
+          var sensorID = buffer.readUInt8(OFFSET_START + 2);
+          var timestamp = buffer.readUInt32LE(OFFSET_START + 3);
+          var value = buffer.readUInt32LE(OFFSET_START + 7);
+          var alarm = buffer.readUInt8(OFFSET_START + 11);
 
-          if (nodes.length === 0) {
-            console.log("No nodes found with address = " + nodeAddress);
-            return;
-          }
+          // XXX: Fix callers to expect a node address instead of a node ID.
+          Node.find({
+            address: nodeAddress,
+          }, function(err, nodes) {
+            if (err) {
+              console.log("Error while retrieving node: " + err);
+              return;
+            }
 
-          callListeners({
-            type: "measurement",
-            nodeId: nodes[0]._id,
-            sensorId: buffer.readUInt8(OFFSET_START + 2),
-            timestamp: buffer.readUInt32LE(OFFSET_START + 3),
-            value: buffer.readUInt32LE(OFFSET_START + 7),
-            alarm: buffer.readUInt8(OFFSET_START + 11),
+            if (nodes.length === 0) {
+              console.log("No nodes found with address = " + nodeAddress);
+              return;
+            }
+
+            callListeners({
+              type: "measurement",
+              nodeId: nodes[0]._id,
+              sensorId: sensorID,
+              timestamp: timestamp,
+              value: value,
+              alarm: alarm,
+            });
           });
-        });
 
+          break;
+
+        case CANJOIN_PACKET_TYPE:
+          callListeners({
+            type: "canJoin",
+            nodeID: buffer.slice(OFFSET_START).toString('base64'),
+          });
         break;
 
-      case CANJOIN_PACKET_TYPE:
-        callListeners({
-          type: "canJoin",
-          nodeID: buffer.slice(OFFSET_START).toString('base64'),
-        });
-      break;
+        case JOIN_PACKET_TYPE:
+          callListeners({
+            type: "join",
+            nodeID: buffer.slice(OFFSET_START).toString('base64'),
+          });
+        break;
 
-      case JOIN_PACKET_TYPE:
-        callListeners({
-          type: "join",
-          nodeID: buffer.slice(OFFSET_START).toString('base64'),
-        });
-      break;
+        default:
+          console.log("RECEIVED UNSUPPORTED MESSAGE: " + packetType);
+          console.log(buffer);
+      }
 
-      default:
-        console.log("RECEIVED UNSUPPORTED MESSAGE: " + packetType);
-        console.log(buffer);
+      var packetLength = packetLengths[packetType];
+
+      if (received > packetLength) {
+        received -= packetLength;
+        buffer = buffer.slice(packetLength);
+      } else {
+        break;
+      }
     }
   };
 
