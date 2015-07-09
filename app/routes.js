@@ -161,6 +161,34 @@ module.exports = function(app,passport) {
     });
   });
 
+  app.get('/api/sensor/:sensorID', function(req, res) {
+    Sensor.find({ _id: req.params.sensorID }, function(err, sensors) {
+      if (err) {
+        res.send(err);
+      }
+
+      res.json(sensors[0]);
+    });
+  });
+
+  app.put('/api/sensor/:sensorID', function(req,res){
+    Sensor.findById(req.params.sensorID, function(err, sensor){
+      if(err){
+        res.send(err);
+      }
+      sensor.klass = req.body.klass;
+      sensor.priority = req.body.priority;
+      sensor.lowThreshold = req.body.low;
+      sensor.highThreshold = req.body.high;
+      sensor.period = req.body.period;
+      
+      sensor.save(function(err){
+        if(err) res.send(err);
+        res.json( { message: 'update config'});
+      });
+
+    });
+  });
   // =====================================
   // LOGIN ===============================
   // =====================================
