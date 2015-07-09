@@ -26,7 +26,7 @@ mongoose.connection.once("open", function() {
     nullSecretKey.fill(0);
 
     setTimeout(function() {
-      board.replyCanJoin(message.nodeID, nullSecretKey, function() {
+      board.replyCanJoin(message.nodeID, nullSecretKey,  /* address */ 1, function() {
         console.log("CANJOINREPLY packet sent");
       });
     }, 5000);

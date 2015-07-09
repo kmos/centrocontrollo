@@ -196,8 +196,8 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
   }).bind(this));
 };
 
-Board.prototype.replyCanJoin = function(nodeID, secretKey, callback) {
-  var buffer = new Buffer(OFFSET_START + 28);
+Board.prototype.replyCanJoin = function(nodeID, secretKey, nodeAddress, callback) {
+  var buffer = new Buffer(OFFSET_START + 30);
 
   buffer.writeUInt8(CANJOINREPLY_PACKET_TYPE, OFFSET_TYPE);
 
@@ -206,6 +206,8 @@ Board.prototype.replyCanJoin = function(nodeID, secretKey, callback) {
 
   var secretKeyBytes = new Buffer(secretKey, "base64");
   secretKeyBytes.copy(buffer, OFFSET_START + 12);
+
+  buffer.writeUInt16LE(nodeAddress, OFFSET_START + 28);
 
   this.serialPort.write(buffer, callback);
 };

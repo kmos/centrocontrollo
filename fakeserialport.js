@@ -77,7 +77,7 @@ FakeSerialPort.prototype.open = function(callback) {
       var message = buildCanJoinPacket(nodeID);
 
       this.eventHandlers["data"] && this.eventHandlers["data"](message);
-    }).bind(this), 20000);
+    }).bind(this), 2000);
   }).bind(this), 0);
 };
 
@@ -96,7 +96,8 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
 
     case CANJOINREPLY_PACKET_TYPE:
       var nodeID = buffer.slice(OFFSET_START, OFFSET_START + 12);
-      var secretKey = buffer.slice(OFFSET_START + 12);
+      var secretKey = buffer.slice(OFFSET_START + 12, OFFSET_START + 28);
+      var nodeAddress = buffer.readUInt16LE(OFFSET_START + 28);
 
       var isNull = true;
       for (var i = 0; i < 16; i++) {

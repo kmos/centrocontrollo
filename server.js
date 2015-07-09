@@ -123,9 +123,9 @@ conn.once("open", function() {
 
       if (nodes.length === 0) {
         logs.error("canJoin from an unauthorized node: " + message.nodeID);
-        board.replyCanJoin(message.nodeID, nullSecretKey);
+        board.replyCanJoin(message.nodeID, nullSecretKey, 0);
       } else {
-        board.replyCanJoin(message.nodeID, nodes[0].secretKey);
+        board.replyCanJoin(message.nodeID, nodes[0].secretKey, nodes[0].address);
       }
 
     });
