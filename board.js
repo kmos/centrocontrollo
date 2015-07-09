@@ -96,14 +96,14 @@ var Board = function() {
         case CANJOIN_PACKET_TYPE:
           callListeners({
             type: "canJoin",
-            nodeID: buffer.slice(OFFSET_START).toString('base64'),
+            nodeID: buffer.slice(OFFSET_START, OFFSET_START + 12).toString('base64'),
           });
         break;
 
         case JOIN_PACKET_TYPE:
           callListeners({
             type: "join",
-            nodeID: buffer.slice(OFFSET_START).toString('base64'),
+            nodeID: buffer.slice(OFFSET_START, OFFSET_START + 12).toString('base64'),
           });
         break;
 
