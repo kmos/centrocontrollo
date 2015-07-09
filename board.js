@@ -1,6 +1,6 @@
 var config     = require('config');
-var SerialPort = require('./fakeserialport');
-//var SerialPort = require('serialport').SerialPort;
+//var SerialPort = require('./fakeserialport');
+var SerialPort = require('serialport').SerialPort;
 var Node       = require('./app/models/node');
 
 const OFFSET_TYPE = 0;
@@ -45,7 +45,7 @@ var Board = function() {
 
     switch (packetType) {
       case DATA_PACKET_TYPE:
-        var nodeAddress = buffer.readUInt16BE(OFFSET_START);
+        var nodeAddress = buffer.readUInt16LE(OFFSET_START);
 
         // XXX: Fix callers to expect a node address instead of a node ID.
         Node.find({
@@ -65,8 +65,8 @@ var Board = function() {
             type: "measurement",
             nodeId: nodes[0]._id,
             sensorId: buffer.readUInt8(OFFSET_START + 2),
-            timestamp: buffer.readUInt32BE(OFFSET_START + 3),
-            value: buffer.readUInt32BE(OFFSET_START + 7),
+            timestamp: buffer.readUInt32LE(OFFSET_START + 3),
+            value: buffer.readUInt32LE(OFFSET_START + 7),
             alarm: buffer.readUInt8(OFFSET_START + 11),
           });
         });
@@ -159,7 +159,7 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
     var buffer = new Buffer(OFFSET_START + 3);
 
     buffer.writeUInt8(READDATA_PACKET_TYPE, OFFSET_TYPE);
-    buffer.writeUInt16BE(nodes[0].address, OFFSET_START);
+    buffer.writeUInt16LE(nodes[0].address, OFFSET_START);
     buffer.writeUInt8(sensorID, OFFSET_START + 2);
 
     this.serialPort.write(buffer, callback);
