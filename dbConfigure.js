@@ -34,6 +34,13 @@ var nodes = [
   connected: false,
   sensors: [],
 },
+{
+  _id: "KQArAAZHMjUxODEw", // [0x29, 0x00, 0x2b, 0x00, 0x06, 0x47, 0x32, 0x35, 0x31, 0x38, 0x31, 0x30]
+  secretKey: "MTIzNDU2Nzg5MTIzNDU2Nw==", // ascii '1234567891234567'
+  address: "5",
+  connected: false,
+  sensors: [],
+}
 ];
 
 // Add 4 sensors in each node
