@@ -23,4 +23,10 @@ angular.module('SensorCtrl', []).controller('SensorController', ["$scope", "$rou
     $http.get("/api/rt_measurements/launch/" + $routeParams.nodeID + "/" + $routeParams.sensorID).success(function(){
     });
   };
+
+  $scope.edit = function(){
+    $http.put("/api/sensor/" + $routeParams.nodeID +"/" + $routeParams.sensorID, $scope.formData).success(function(){
+    });
+  };
+
 }]);
