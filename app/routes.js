@@ -167,11 +167,11 @@ module.exports = function(app,passport) {
       if(err){
         res.send(err);
       } 
-      node.sensors(req.params.sensorID).klass = req.body.klass;
-      node.sensors(req.params.sensorID).priority = req.body.priority;
-      node.sensors(req.params.sensorID).lowThreshold = req.body.low;
-      node.sensors(req.params.sensorID).highThreshold = req.body.high;
-      node.sensors(req.params.sensorID).period = req.body.period;
+      node.sensors[req.params.sensorID].klass = req.body.klass;
+      node.sensors[req.params.sensorID].priority = req.body.priority;
+      node.sensors[req.params.sensorID].lowThreshold = req.body.low;
+      node.sensors[req.params.sensorID].highThreshold = req.body.high;
+      node.sensors[req.params.sensorID].period = req.body.period;
 
       node.save(function(err){
         if(err) res.send(err);
