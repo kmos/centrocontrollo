@@ -53,11 +53,28 @@ var Board = function() {
     });
   }).bind(this);
 
+  // Cache zeroBuffer so we don't need to create it too often.
+  var zeroBuffer = new Buffer(0);
+  var oldBuffer = new Buffer(0);
+
   var receiveMessage = function(buffer) {
+    if (oldBuffer.length > 0) {
+      buffer = Buffer.concat([oldBuffer, buffer]);
+      oldBuffer = zeroBuffer;
+    }
+
     var received = buffer.length;
+
+    var packetLength = 0;
 
     while (received != 0) {
       var packetType = buffer.readUInt8(OFFSET_TYPE);
+      packetLength = packetLengths[packetType] || 0;
+
+      if (packetLength > received) {
+        oldBuffer = Buffer.concat([oldBuffer, buffer]);
+        break;
+      }
 
       switch (packetType) {
         case DATA_PACKET_TYPE:
@@ -110,9 +127,8 @@ var Board = function() {
         default:
           console.log("RECEIVED UNSUPPORTED MESSAGE: " + packetType);
           console.log(buffer);
+          oldBuffer = zeroBuffer;
       }
-
-      var packetLength = packetLengths[packetType];
 
       if (received > packetLength) {
         received -= packetLength;

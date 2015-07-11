@@ -46,7 +46,7 @@ var FakeSerialPort = function(path, options) {
 
 FakeSerialPort.prototype.on = function(what, callback) {
   this.eventHandlers[what] = callback;
-}
+};
 
 FakeSerialPort.prototype.open = function(callback) {
   setTimeout((function() {
