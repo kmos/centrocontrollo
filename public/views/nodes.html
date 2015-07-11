@@ -37,12 +37,16 @@
   </div>
   <form>
   <div class="form-group">
-    <label for="exampleInputEmail1">Id nodo</label>
+    <label for="input1">Id nodo</label>
     <input type="text" class="form-control" ng-model="formData._id" placeholder="Id Nodo">
   </div>
+    <div class="form-group">
+        <label for="input1">chiave Segreta</label>
+        <input type="text" class="form-control" ng-model="formData.secret" placeholder="chiave segreta">
+  </div> 
   <div class="form-group">
-    <label for="exampleInputPassword1">Indirizzo</label>
-    <input type="text" class="form-control" ng-model="formData.address" placeholder="indirizzo">
+    <label for="input2">Indirizzo di rete</label>
+    <input type="text" class="form-control" ng-model="formData.address" placeholder="indirizzo di rete">
   </div>
   <button type="submit" class="btn btn-default" ng-click="createNode()">Inserisci</button>
 </form>
