@@ -171,7 +171,7 @@ module.exports = function(app,passport) {
       node.sensors[req.params.sensorID].priority = req.body.priority;
       node.sensors[req.params.sensorID].lowThreshold = req.body.low;
       node.sensors[req.params.sensorID].highThreshold = req.body.high;
-      node.sensors[req.params.sensorID].period = req.body.period;
+      node.sensors[req.params.sensorID].periodMs = req.body.period;
 
       node.save(function(err){
         if(err) res.send(err);
