@@ -161,17 +161,11 @@ module.exports = function(app,passport) {
     });
   });
 
-  app.get('/api/sensor/:sensorID', function(req, res) {
-    Sensor.find({ _id: req.params.sensorID }, function(err, sensors) {
-      if (err) {
-        res.send(err);
-      }
-
-      res.json(sensors[0]);
-    });
-  });
-
-  app.put('/api/sensor/:sensorID', function(req,res){
+  app.put('/api/sensor/:nodeID/:sensorID', function(req,res){
+    
+    Node.findById(req.params.nodeID, function(err, node)){
+      
+    };
     Sensor.findById(req.params.sensorID, function(err, sensor){
       if(err){
         res.send(err);
