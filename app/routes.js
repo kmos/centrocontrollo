@@ -163,24 +163,20 @@ module.exports = function(app,passport) {
 
   app.put('/api/sensor/:nodeID/:sensorID', function(req,res){
     
-    Node.findById(req.params.nodeID, function(err, node)){
-      
-    };
-    Sensor.findById(req.params.sensorID, function(err, sensor){
+    Node.findById(req.params.nodeID, function(err, node){
       if(err){
         res.send(err);
-      }
-      sensor.klass = req.body.klass;
-      sensor.priority = req.body.priority;
-      sensor.lowThreshold = req.body.low;
-      sensor.highThreshold = req.body.high;
-      sensor.period = req.body.period;
-      
-      sensor.save(function(err){
+      } 
+      node.sensors(req.params.sensorID).klass = req.body.klass;
+      node.sensors(req.params.sensorID).priority = req.body.priority;
+      node.sensors(req.params.sensorID).lowThreshold = req.body.low;
+      node.sensors(req.params.sensorID).highThreshold = req.body.high;
+      node.sensors(req.params.sensorID).period = req.body.period;
+
+      node.save(function(err){
         if(err) res.send(err);
         res.json( { message: 'update config'});
       });
-
     });
   });
   // =====================================
