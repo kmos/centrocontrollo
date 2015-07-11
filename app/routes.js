@@ -52,7 +52,7 @@ module.exports = function(app,passport) {
     Node.create({
       _id : req.body._id,
       address : req.body.address,
-      connected : req.body.connected
+      secretKey : req.body.secret
     }, function(err, node){
       if(err) res.send(err);
       getNodes(res);
