@@ -17,4 +17,8 @@ angular.module('NodeCtrl', []).controller('NodeController', ["$scope", "$routePa
   $scope.setSelected = function(sensorID) {
     $location.path("/Sensor/" + $routeParams.nodeID + "/" + sensorID);
   };
+
+  $scope.addSensor = function (){
+    $http.post("/api/nodes/" + $routeParams.nodeID, $scope.formData).success(function(){});
+  }
 }]);

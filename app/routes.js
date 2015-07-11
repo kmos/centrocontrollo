@@ -61,8 +61,7 @@ module.exports = function(app,passport) {
   
   app.put('/api/nodes/:nodeID', auth, function(req, res){
     Node.findById(req.params.nodeID, function(err, node){
-      if(err) res.send(err);
-      //in linea di massima non vanno modificati i parametri del nodo ma i sensori
+      if(err) res.send(err); 
       node.save(function(err){
       if(err) res.send(err);
       res.json({message: 'node update'});
@@ -70,6 +69,21 @@ module.exports = function(app,passport) {
     });
   });
   
+  app.post('/api/nodes/:nodeID', function(req, res){
+    Node.findById(req.params.nodeID, function(err, node){
+      if(err) res.send(err);
+      node.sensors.push({
+        _id: req.body.id,
+        klass: req.body.klass,
+        priority: req.body.priority
+      });
+      node.save(function (err){
+        if(err) res.send(err);
+        res.json({message: 'success'});
+      });
+    });
+  });
+
   app.delete('/api/nodes/:nodeID', function(req, res){
     Node.remove({_id: req.params.nodeID}, function(err, node){
       if(err) res.send(err);
