@@ -186,7 +186,7 @@ module.exports = function(app,passport) {
       node.sensors[req.params.sensorID].lowThreshold = req.body.low;
       node.sensors[req.params.sensorID].highThreshold = req.body.high;
       node.sensors[req.params.sensorID].periodMs = req.body.period;
-
+      node.sensors[req.params.sensorID].alarm = req.body.alarm;
       node.save(function(err){
         if(err) res.send(err);
         res.json( { message: 'update config'});
