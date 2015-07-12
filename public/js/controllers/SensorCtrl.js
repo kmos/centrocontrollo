@@ -25,7 +25,9 @@ angular.module('SensorCtrl', []).controller('SensorController', ["$scope", "$rou
   };
 
   $scope.edit = function(){
-    $http.put("/api/sensor/" + $routeParams.nodeID +"/" + $routeParams.sensorID, $scope.formData).success(function(){
+    $http.put("/api/sensor/" + $routeParams.nodeID +"/" + $routeParams.sensorID, $scope.formData).success(function() {
+      // XXX: Replace me with a nicer HTML dialog!
+      alert("Configuration done!");
     });
   };
 
