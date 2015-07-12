@@ -7,22 +7,26 @@ angular.module('NodesCtrl', []).controller('NodesController', ['$scope', '$locat
       edges: []
     };
 
-    for (i = 0; i < nodes.length; i++) {
+    for (var i = 0; i < nodes.length; i++) {
       g.nodes.push({
         id: nodes[i]._id,
-        label: nodes[i]._id,
+        label: nodes[i].address,
         x: Math.random(),
         y: Math.random(),
-        size: Math.random(),
+        size: 3,
         color: '#666',
       });
     }
 
-    for (i = 0; i < nodes.length * 2; i++) {
+    var connectedNodes = nodes.filter(function(node) {
+      return node.connected;
+    });
+
+    for (var i = 0; i < connectedNodes.length * 2; i++) {
       g.edges.push({
         id: 'e' + i,
-        source: nodes[Math.floor(Math.random() * nodes.length)]._id,
-        target: nodes[Math.floor(Math.random() * nodes.length)]._id,
+        source: connectedNodes[Math.floor(Math.random() * connectedNodes.length)]._id,
+        target: connectedNodes[Math.floor(Math.random() * connectedNodes.length)]._id,
         size: Math.random(),
         color: '#ccc',
       });
