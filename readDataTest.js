@@ -39,4 +39,8 @@ mongoose.connection.once("open", function() {
       console.log("READDATA packet sent");
     });
   }, 5000);
+
+  setInterval(function() {
+    board.sendConfig("0", "0", 1, 100, 0, 1000, 0);
+  }, 10000);
 });

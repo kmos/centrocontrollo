@@ -177,16 +177,21 @@ module.exports = function(app,passport) {
 
   app.put('/api/sensor/:nodeID/:sensorID', function(req,res){
     
-    Node.findById(req.params.nodeID, function(err, node){
-      if(err){
+    Node.findById(req.params.nodeID, function(err, node) {
+      if(err) {
         res.send(err);
-      } 
-      node.sensors[req.params.sensorID].klass = req.body.klass;
+        return;
+      }
+
       node.sensors[req.params.sensorID].priority = req.body.priority;
       node.sensors[req.params.sensorID].lowThreshold = req.body.low;
       node.sensors[req.params.sensorID].highThreshold = req.body.high;
       node.sensors[req.params.sensorID].periodMs = req.body.period;
       node.sensors[req.params.sensorID].alarm = req.body.alarm;
+
+      board.sendConfig(node.address, req.params.sensorID, req.body.alarm, req.body.high,
+                       req.body.low, req.body.period, req.body.priority);
+
       node.save(function(err){
         if(err) res.send(err);
         res.json( { message: 'update config'});

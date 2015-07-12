@@ -1,10 +1,17 @@
 const OFFSET_TYPE = 0;
 const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
+const READDATA_PACKET_LENGTH = 4;
+const CONFIGSENSOR_PACKET_TYPE = 0x01;
+const CONFIGSENSOR_PACKET_SIZE = 16;
 const DATA_PACKET_TYPE = 0x02;
+const DATA_PACKET_LENGTH = 13;
 const CANJOIN_PACKET_TYPE = 0x03;
+const CANJOIN_PACKET_LENGTH = 13;
 const CANJOINREPLY_PACKET_TYPE = 0x04;
+const CANJOINREPLY_PACKET_LENGTH = 29;
 const JOIN_PACKET_TYPE = 0x05;
+const JOIN_PACKET_LENGTH = 13;
 
 function buildMeasurementPacket(nodeAddress, sensorID, alarm) {
   var reply = new Buffer(OFFSET_START + 12);
@@ -12,7 +19,7 @@ function buildMeasurementPacket(nodeAddress, sensorID, alarm) {
   reply.writeUInt8(DATA_PACKET_TYPE, OFFSET_TYPE);
   reply.writeUInt16LE(nodeAddress, OFFSET_START);
   reply.writeUInt8(sensorID, OFFSET_START + 2);
-  reply.writeUInt32LE(Date.now() | 0, OFFSET_START + 3);
+  reply.writeUInt32LE(Date.now() / 1000 | 0, OFFSET_START + 3);
   reply.writeUInt32LE(Math.floor(Math.random() * 100), OFFSET_START + 7);
   reply.writeUInt8(alarm, OFFSET_START + 11);
 
@@ -92,7 +99,8 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
       var sensorID = buffer.readUInt8(OFFSET_START + 2);
 
       reply = buildMeasurementPacket(nodeAddress, sensorID, Math.floor(Math.random() * 2));
-    break;
+
+      break;
 
     case CANJOINREPLY_PACKET_TYPE:
       var nodeID = buffer.slice(OFFSET_START, OFFSET_START + 12);
@@ -111,7 +119,12 @@ FakeSerialPort.prototype.write = function(buffer, callback) {
       } else {
         console.log("noCanJoin!");
       }
-    break;
+
+      break;
+
+    case CONFIGSENSOR_PACKET_TYPE:
+      console.log("Received ConfigSensor packet!");
+      break;
 
     default:
       console.log("FakeSerialPort received an unknown packet: " + packetType);

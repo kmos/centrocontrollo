@@ -7,21 +7,24 @@ const OFFSET_TYPE = 0;
 const OFFSET_START = 1;
 const READDATA_PACKET_TYPE = 0x00;
 const READDATA_PACKET_LENGTH = 4;
+const CONFIGSENSOR_PACKET_TYPE = 0x01;
+const CONFIGSENSOR_PACKET_LENGTH = 16;
 const DATA_PACKET_TYPE = 0x02;
 const DATA_PACKET_LENGTH = 13;
 const CANJOIN_PACKET_TYPE = 0x03;
 const CANJOIN_PACKET_LENGTH = 13;
 const CANJOINREPLY_PACKET_TYPE = 0x04;
-const CANJOINREPLY_PACKET_LENGTH = 29;
+const CANJOINREPLY_PACKET_LENGTH = 31;
 const JOIN_PACKET_TYPE = 0x05;
 const JOIN_PACKET_LENGTH = 13;
 
 var packetLengths = {
-  0: 4,
-  2: 13,
-  3: 13,
-  4: 29,
-  5: 13,
+  0: READDATA_PACKET_LENGTH,
+  1: CONFIGSENSOR_PACKET_LENGTH,
+  2: DATA_PACKET_LENGTH,
+  3: CANJOIN_PACKET_LENGTH,
+  4: CANJOINREPLY_PACKET_LENGTH,
+  5: JOIN_PACKET_LENGTH,
 };
 
 var Board = function() {
@@ -202,7 +205,7 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
       return;
     }
 
-    var buffer = new Buffer(OFFSET_START + 3);
+    var buffer = new Buffer(READDATA_PACKET_LENGTH);
 
     buffer.writeUInt8(READDATA_PACKET_TYPE, OFFSET_TYPE);
     buffer.writeUInt16LE(nodes[0].address, OFFSET_START);
@@ -213,7 +216,7 @@ Board.prototype.askForMeasurement = function(nodeID, sensorID, callback) {
 };
 
 Board.prototype.replyCanJoin = function(nodeID, secretKey, nodeAddress, callback) {
-  var buffer = new Buffer(OFFSET_START + 30);
+  var buffer = new Buffer(CANJOINREPLY_PACKET_LENGTH);
 
   buffer.writeUInt8(CANJOINREPLY_PACKET_TYPE, OFFSET_TYPE);
 
@@ -224,6 +227,22 @@ Board.prototype.replyCanJoin = function(nodeID, secretKey, nodeAddress, callback
   secretKeyBytes.copy(buffer, OFFSET_START + 12);
 
   buffer.writeUInt16LE(nodeAddress, OFFSET_START + 28);
+
+  this.serialPort.write(buffer, callback);
+};
+
+Board.prototype.sendConfig = function(nodeAddress, sensorID, alarm, highThreshold, lowThreshold, period, priority, callback) {
+  var buffer = new Buffer(CONFIGSENSOR_PACKET_LENGTH);
+
+  buffer.writeUInt8(CONFIGSENSOR_PACKET_TYPE, OFFSET_TYPE);
+
+  buffer.writeUInt16LE(nodeAddress, OFFSET_START);
+  buffer.writeUInt8(sensorID, OFFSET_START + 2);
+  buffer.writeUInt8(alarm, OFFSET_START + 3);
+  buffer.writeUInt32LE(highThreshold, OFFSET_START + 4);
+  buffer.writeUInt32LE(lowThreshold, OFFSET_START + 8);
+  buffer.writeUInt16LE(period, OFFSET_START + 12);
+  buffer.writeInt8(priority, OFFSET_START + 14);
 
   this.serialPort.write(buffer, callback);
 };
