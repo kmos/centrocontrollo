@@ -1,7 +1,7 @@
 {
   "System": {
     "servConfig": {
-      "ip": "127.0.0.1",
+      "ip": "192.168.1.121",
       "http_port": 8080,
       "https_port": 4443,
       "private_key": "./ssl/privatekey.pem",
@@ -12,7 +12,7 @@
     },
     "credential": {
       "username": "admin",
-      "password": "porco"
+      "password": "embedded"
     },
     "serial": {
       "port": "/dev/ttyACM0",

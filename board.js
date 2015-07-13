@@ -1,6 +1,6 @@
 var config     = require('config');
-var SerialPort = require('./fakeserialport');
-//var SerialPort = require('serialport').SerialPort;
+//var SerialPort = require('./fakeserialport');
+var SerialPort = require('serialport').SerialPort;
 var Node       = require('./app/models/node');
 
 const OFFSET_TYPE = 0;
