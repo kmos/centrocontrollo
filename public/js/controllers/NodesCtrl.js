@@ -22,14 +22,20 @@ angular.module('NodesCtrl', []).controller('NodesController', ['$scope', '$locat
       return node.connected;
     });
 
-    for (var i = 0; i < connectedNodes.length * 2; i++) {
-      g.edges.push({
-        id: 'e' + i,
-        source: connectedNodes[Math.floor(Math.random() * connectedNodes.length)]._id,
-        target: connectedNodes[Math.floor(Math.random() * connectedNodes.length)]._id,
-        size: Math.random(),
-        color: '#ccc',
-      });
+    for (var i = 0; i < connectedNodes.length; i++) {
+      for (var j = 0; j < connectedNodes.length; j++) {
+        if (i == j) {
+          continue;
+        }
+
+        g.edges.push({
+          id: 'e' + i + j,
+          source: connectedNodes[i]._id,
+          target: connectedNodes[j]._id,
+          size: Math.random(),
+          color: '#ccc',
+        });
+      }
     }
 
     var s = new sigma({
