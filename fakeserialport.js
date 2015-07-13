@@ -63,7 +63,7 @@ FakeSerialPort.prototype.open = function(callback) {
     // Send a fake measurement every 5 seconds
     setInterval((function() {
       var message = buildMeasurementPacket(Math.floor(Math.random() * 5),
-                                           Math.floor(Math.random() * 5),
+                                           Math.floor(Math.random() * 2),
                                            0);
 
       this.eventHandlers["data"] && this.eventHandlers["data"](message);
@@ -72,7 +72,7 @@ FakeSerialPort.prototype.open = function(callback) {
     // Send a fake alarm every 10 seconds
     setInterval((function() {
       var message = buildMeasurementPacket(Math.floor(Math.random() * 5),
-                                           Math.floor(Math.random() * 5),
+                                           Math.floor(Math.random() * 2),
                                            1);
 
       this.eventHandlers["data"] && this.eventHandlers["data"](message);
