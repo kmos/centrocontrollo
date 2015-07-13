@@ -17,6 +17,8 @@ const CANJOINREPLY_PACKET_TYPE = 0x04;
 const CANJOINREPLY_PACKET_LENGTH = 31;
 const JOIN_PACKET_TYPE = 0x05;
 const JOIN_PACKET_LENGTH = 13;
+const LOG_PACKET_TYPE = 0x06;
+const LOG_PACKET_LENGTH = 129;
 
 var packetLengths = {
   0: READDATA_PACKET_LENGTH,
@@ -25,6 +27,7 @@ var packetLengths = {
   3: CANJOIN_PACKET_LENGTH,
   4: CANJOINREPLY_PACKET_LENGTH,
   5: JOIN_PACKET_LENGTH,
+  6: LOG_PACKET_LENGTH,
 };
 
 var Board = function() {
@@ -124,6 +127,13 @@ var Board = function() {
           callListeners({
             type: "join",
             nodeID: buffer.slice(OFFSET_START, OFFSET_START + 12).toString('base64'),
+          });
+        break;
+
+        case LOG_PACKET_TYPE:
+          callListeners({
+            type: "log",
+            line: buffer.slice(OFFSET_START, OFFSET_START + 128).toString('ascii').split("\n")[0],
           });
         break;
 

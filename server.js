@@ -155,6 +155,10 @@ conn.once("open", function() {
       });
     });
   }, "join");
+
+  board.registerListener(function(message) {
+    logs.info(message.line);
+  }, "log");
 });
 
 // expose app           
