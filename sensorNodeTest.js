@@ -1,5 +1,5 @@
 var config     = require('config');
-var SerialPort = require('serialport');
+var SerialPort = require('serialport').SerialPort;
 
 var serialPort = new SerialPort(config.get('System.serial.port'), {
   baudrate: config.get('System.serial.baudrate')
