@@ -4,7 +4,6 @@ angular.module('ccApp', [
   'appRoutes',
   'MainCtrl',
   'ControlPanelCtrl',
-  'ControlPanelService',
   'NodesCtrl',
   'NodesService',
   'MonitorCtrl',
