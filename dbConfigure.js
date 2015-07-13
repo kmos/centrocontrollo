@@ -40,7 +40,35 @@ var nodes = [
   address: "9",
   connected: false,
   sensors: [],
-}
+},
+{
+  _id: "NgA3ABNHMzE5MDcw", // [0x36, 0x00, 0x37, 0x00, 0x13, 0x47, 0x33, 0x31, 0x39, 0x30, 0x37, 0x30]
+  secretKey: "MTIzNDU2Nzg5MTIzNDU2Nw==", // ascii '1234567891234567'
+  address: "5",
+  connected: false,
+  sensors: [],
+},
+{
+  _id: "IgA9AA1HMjQ4NjYx", // [0x22, 0x00, 0x3D, 0x00, 0x0D, 0x47, 0x32, 0x34, 0x38, 0x36, 0x36, 0x31]
+  secretKey: "MTIzNDU2Nzg5MTIzNDU2Nw==", // ascii '1234567891234567'
+  address: "1",
+  connected: false,
+  sensors: [],
+},
+{
+  _id: "OQAtAAJHMjUxODEw", // [0x39, 0x00, 0x2D, 0x00, 0x02, 0x47, 0x32, 0x35, 0x31, 0x38, 0x31, 0x30]
+  secretKey: "MTIzNDU2Nzg5MTIzNDU2Nw==", // ascii '1234567891234567'
+  address: "17",
+  connected: false,
+  sensors: [],
+},
+{
+  _id: "IQA5ABdHMTQ2MjQ2", // [0x21, 0x00, 0x39, 0x00, 0x17, 0x47, 0x31, 0x34, 0x36, 0x32, 0x34, 0x36]
+  secretKey: "MTIzNDU2Nzg5MTIzNDU2Nw==", // ascii '1234567891234567'
+  address: "15",
+  connected: false,
+  sensors: [],
+},
 ];
 
 // Add 4 sensors in each node
