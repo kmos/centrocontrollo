@@ -14,7 +14,7 @@ angular.module('NodesCtrl', []).controller('NodesController', ['$scope', '$locat
         x: Math.random(),
         y: Math.random(),
         size: 3,
-        color: '#666',
+        color: nodes[i].connected ? "#00FF00" : "#666",
       });
     }
 
