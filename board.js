@@ -86,7 +86,7 @@ var Board = function() {
         case DATA_PACKET_TYPE:
           var nodeAddress = buffer.readUInt16LE(OFFSET_START);
           var sensorID = buffer.readUInt8(OFFSET_START + 2);
-          var timestamp = buffer.readUInt32LE(OFFSET_START + 3);
+          var timestamp = buffer.readUInt32LE(OFFSET_START + 3) || (Date.now() / 1000 | 0);
           var value = buffer.readUInt32LE(OFFSET_START + 7);
           var alarm = buffer.readUInt8(OFFSET_START + 11);
 
